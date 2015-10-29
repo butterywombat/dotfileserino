@@ -1,0 +1,181 @@
+#!/usr/bin/ruby
+
+require 'fileutils'
+require 'json'
+require 'uri'
+require 'shellwords'
+
+DOTFILES_DIR = "#{Dir.home}/dotfiles"
+GITHUB_DOTFILES_REPO = "dxuehu/dotfileserino"
+TOTALTERMINAL_FILENAME = 'TotalTerminal-1.4.11.dmg'
+POWERLINE_CONFIG_DIR = "#{Dir.home}/.config/powerline"
+POWERLINE_CONFIG_FILE = POWERLINE_CONFIG_DIR + '/config.json'
+POWERLINE_FONT = "Meslo LG M DZ Regular for Powerline"
+DEFAULT_TERMINAL_THEME = "Solarized Dark.terminal"
+ZSH_PATH = '/usr/local/bin/zsh'
+
+module Tty extend self
+  def blue; bold 34; end
+  def white; bold 39; end
+  def red; underline 31; end
+  def reset; escape 0; end
+  def bold n; escape "1;#{n}" end
+  def underline n; escape "4;#{n}" end
+  def escape n; "\033[#{n}m" if STDOUT.tty? end
+end
+
+class File
+  def self.symlink_or_file_exists?(filepath)
+    exists?(filepath) || symlink?(filepath)
+  end
+end
+
+class Array
+  def shell_s
+    copy = dup
+    first_elem = copy.shift
+    copy.map{ |arg| arg.gsub " ", "\\ " }.unshift(first_elem) * " "
+  end
+end
+
+def ohai *args
+  puts "#{Tty.blue}==>#{Tty.white} #{args.shell_s}#{Tty.reset}"
+end
+
+def brew *args
+  args.each do |pkg|
+    if brew_package_installed?(pkg)
+      ohai "Upgrading homebrew package #{pkg}..."
+      system 'brew', 'upgrade', pkg
+    else
+      ohai "Installing homebrew package #{pkg}..."
+      system 'brew', 'install', pkg
+    end
+  end
+end
+
+def brew_package_installed?(package)
+  File.executable? "/usr/local/bin/#{package}"
+end
+
+####################################################################### script
+abort "Don't run this as root!" if Process.uid == 0
+abort <<-EOABORT unless `groups`.split.include? "admin"
+This script requires the user #{ENV['USER']} to be an Administrator. If you can't
+make that happen ask someone to set your user to be an Administrator in
+System Preferences or `su' to a non-root user with Administrator privileges.
+EOABORT
+
+#%x(sudo -v)
+# Keep-alive: update existing `sudo` time stamp until `.osx` has finished
+#%x(while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &)
+
+#TODO add the gems here too
+#ohai "Updating RubyGems..."
+#%(sudo gem update --system)
+
+#TODO problem here, brew doesn't install?
+Dir.chdir Dir.home do
+  if Dir["/usr/local/.git/*"].empty?
+    ohai "Installing Homebrew..."
+    %x(ruby -e "$(curl -fsSL https://raw.github.com/Homebrew/homebrew/go/install)")
+  else
+    ohai "Updating Homebrew..."
+    system 'brew', 'update'
+  end
+  brew_packages = %w(git tig zsh python tmux reattach-to-user-namespace hub vim pv mysql node nvm ack)
+  brew(*brew_packages)
+end
+
+#uncomment to install mysql
+#ohai "Configuring MySQL..."
+#launch_agents_dir = "#{Dir.home}/Library/Launchagents"
+#Dir.mkdir(launch_agents_dir) unless Dir.exists?(launch_agents_dir)
+#%x(ln -sfv /usr/local/opt/mysql/*.plist ~/Library/LaunchAgents)
+#%x(launchctl load ~/Library/LaunchAgents/homebrew.mxcl.mysql.plist)
+#
+ohai "Cloning dotfiles..."
+if Dir.exists? DOTFILES_DIR
+  FileUtils.mv(DOTFILES_DIR, "#{DOTFILES_DIR}.old")
+end
+%x(hub clone #{GITHUB_DOTFILES_REPO} #{DOTFILES_DIR})
+
+ohai "Symlinking dotfiles..."
+Dir.chdir Dir.home do
+  #Dir["#{Dir.home}/dotfiles/dotfiles/*"].each do |path|
+  #Dir["#{Dir.home}/Dropbox/code/dotfiles/*"].each do |path| #I used this when I didn't have github repo
+  Dir["#{DOTFILES_DIR}/*"].each do |path| #does this work?
+    filename = path.split('/').last
+    next if filename == 'installscript' #this file is not a dotfile
+    existing_file = [Dir.home, filename].join('/.')
+    FileUtils.mv(existing_file, "#{existing_file}.old") if File.symlink_or_file_exists?(existing_file)
+    %x(ln -s #{path} .#{filename})
+  end
+end
+
+#vim plugins
+ohai "Installing Janus..."
+%x(curl -Lo- https://bit.ly/janus-bootstrap | bash)
+
+ohai "Setting Zsh as default shell for #{ENV['USER']}"
+%x(sudo sh -c 'echo #{ZSH_PATH} >> /etc/shells') if File.readlines('/etc/shells').grep(ZSH_PATH).empty?
+%x(chsh -s ZSH_PATH)
+
+
+ohai "Downloading and installing antigen..."
+%x(curl -L https://raw.github.com/zsh-users/antigen/master/antigen.zsh > ~/antigen.zsh)
+
+ohai "Installing and configuring powerline..."
+%x(pip install git+git://github.com/Lokaltog/powerline)
+#For powerline right side
+%x(pip install psutil)
+%x(mkdir -p ~/.config/powerline)
+config_files_dir = %x(find /usr/local -name config_files).strip
+FileUtils.cp_r("#{config_files_dir}/.", POWERLINE_CONFIG_DIR)
+hash = JSON.parse(File.read(POWERLINE_CONFIG_FILE))
+hash['ext']['shell']['theme'] = 'default_leftonly'
+File.open(POWERLINE_CONFIG_FILE,"w") do |f|
+  f.write(hash.to_json)
+end
+
+#TODO font doesn't install automatically? had to click
+ohai "Downloading powerline fonts..."
+%x(curl -L "https://github.com/Lokaltog/powerline-fonts/blob/master/Meslo/#{URI.escape(POWERLINE_FONT)}.otf?raw=true" > #{Dir.home}/Downloads/#{Shellwords.shellescape(POWERLINE_FONT)}.otf)
+
+#TODO Still had to manually configure this shit (do in terminal settings)
+ohai "Configuring terminal theme..."
+%x(curl -L https://raw.githubusercontent.com/tomislav/osx-terminal.app-colors-solarized/master/#{URI.escape(DEFAULT_TERMINAL_THEME)} > ~/Downloads/#{Shellwords.shellescape(DEFAULT_TERMINAL_THEME)})
+%x(open "#{Dir.home}/Downloads/#{DEFAULT_TERMINAL_THEME}")
+%x(sleep 1) # Wait a bit to make sure the theme is loaded
+%x(defaults write com.apple.terminal "Default Window Settings" -string "Solarized Dark")
+%x(defaults write com.apple.terminal "Startup Window Settings" -string "Solarized Dark")
+
+#ohai "Installing RVM..."
+#%x(curl -sSL https://get.rvm.io | bash -s stable)
+
+ohai "Configuring OSX defaults..."
+%x(defaults write com.apple.dock.plist autohide -bool Yes)
+%x(defaults write com.apple.dock.plist orientation left)
+%x(defaults write NSGlobalDomain AppleHighlightColor -string "0.764700 0.976500 0.568600")
+#this prevents .DS_Store writes
+%x(defaults write com.apple.desktopservices DSDontWriteNetworkStores true)
+%x(killall Dock)
+# Trackpad: enable tap to click for this user and for the login screen
+%x(defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad Clicking -bool true)
+%x(defaults -currentHost write NSGlobalDomain com.apple.mouse.tapBehavior -int 1)
+%x(defaults write NSGlobalDomain com.apple.mouse.tapBehavior -int 1)
+%x(sudo nvram SystemAudioVolume=" ")
+
+ohai "Installing Totalterminal"
+Dir.chdir "#{Dir.home}/Downloads" do
+  %x(curl -OL http://downloads.binaryage.com/#{TOTALTERMINAL_FILENAME})
+  %x(hdiutil mount #{TOTALTERMINAL_FILENAME})
+  %x(sudo installer -package /Volumes/TotalTerminal/TotalTerminal.pkg -target /)
+end
+
+ohai "Installing node modules"
+%x(npm install -g jshint)
+%x(npm install -g nodemon)
+%x(npm install -g gulp)
+
+ohai "Installation successful!"
