@@ -1,0 +1,12 @@
+[user]
+	name = Xue Hu
+	email = dxuehu@gmail.com
+[core]
+	editor = vim
+	excludesfile = /Users/xuehu/.gitignore_global
+[credential]
+	helper = osxkeychain
+[push]
+	default = matching
+[alias]
+	co = checkout

@@ -1,0 +1,167 @@
+"Test
+"There may be dupes--figure out later--janus vs this file vs lines of this
+"file
+call pathogen#infect()
+
+"!!!From my old vimrc
+noremap ,gc :!git add . && git commit -am "
+noremap ,gp :!git push<CR>
+noremap ,gl :!git pull<CR>
+noremap ,hp :!hub pull-request<CR>
+noremap ,dep :!rake deploy:testing<CR>
+noremap ; :
+noremap : ;
+noremap ,n :NERDTreeToggle<CR>
+"shouldn't need this but seems ; : above conflicting
+
+
+""!!!!!The following is from skwp/dotfiles/vimrc (yadr)
+"" Use Vim settings, rather then Vi settings (much better!).
+"" This must be first, because it changes other options as a side effect.
+"set nocompatible
+"
+"" ================ General Config ====================
+"
+"set backspace=indent,eol,start  "Allow backspace in insert mode
+"set history=1000                "Store lots of :cmdline history
+"set showcmd                     "Show incomplete cmds down the bottom
+set autoread                    "Reload files changed outside vim
+"
+"" This makes vim act like all other editors, buffers can
+"" exist in the background without being in a window.
+"" http://items.sjbach.com/319/configuring-vim-right
+"set hidden
+"
+"" ================ Turn Off Swap Files ==============
+"
+set noswapfile
+"set nobackup
+set backupdir=~/.vim/backups/backups
+set nowb
+"
+"" ================ Persistent Undo ==================
+"" Keep undo history across sessions, by storing in file.
+"" Only works all the time.
+"
+silent !mkdir ~/.vim/backups > /dev/null 2>&1
+set undodir=~/.vim/backups
+set undofile
+"
+"" ================ Indentation ======================
+"
+"set autoindent
+"set smartindent
+"set smarttab
+"set shiftwidth=2
+"set softtabstop=2
+"set tabstop=2
+"set expandtab
+"
+"filetype plugin indent on
+"
+"" Display tabs and trailing spaces visually
+"set list listchars=tab:\ \ ,trail:·
+"
+"set nowrap       "Don't wrap lines
+"set linebreak    "Wrap lines at convenient points
+"
+"" ================ Folds ============================
+"
+"set foldmethod=indent   "fold based on indent
+"set foldnestmax=3       "deepest fold is 3 levels
+"set nofoldenable        "dont fold by default
+"
+"" ================ Completion =======================
+"
+"set wildmode=list:longest
+"set wildmenu                "enable ctrl-n and ctrl-p to scroll thru matches
+"set wildignore=*.o,*.obj,*~ "stuff to ignore when tab completing
+"set wildignore+=*vim/backups*
+"set wildignore+=*sass-cache*
+"set wildignore+=*DS_Store*
+"set wildignore+=vendor/rails/**
+"set wildignore+=vendor/cache/**
+"set wildignore+=*.gem
+"set wildignore+=log/**
+"set wildignore+=tmp/**
+"set wildignore+=*.png,*.jpg,*.gif
+"
+"" ================ Scrolling ========================
+"
+"set scrolloff=8         "Start scrolling when we're 8 lines away from margins
+"set sidescrolloff=15
+"set sidescroll=1
+
+"!!!From David
+" Tabs ************************************************************************
+set tabstop=2
+set expandtab
+set shiftwidth=2
+
+" Windows *********************************************************************
+set equalalways " Multiple windows, when created, are equal in size
+set splitbelow splitright
+
+" Searching *******************************************************************
+set hlsearch  " highlight search
+set incsearch  " incremental search, search as you type
+set ignorecase " Ignore case when searching
+set smartcase " Ignore case when searching lowercase
+:nnoremap <silent> <Space> :nohlsearch<Bar>:echo<CR>
+
+" Colors **********************************************************************
+syntax on
+set background=dark
+let g:solarized_termcolors=16
+let g:solarized_termtrans=0
+colorscheme solarized
+
+
+" Status Line *****************************************************************
+set ruler " Show ruler
+set ch=1 " Make command line two lines high
+
+
+" Insert New Line **************************************************************
+set ch=1 " Make command one line high
+
+" Mapping ********************************************************************
+noremap <leader>w :up<cr>
+noremap <leader>v :vsp ~/.vimrc.after<cr>
+noremap <leader>f :NERDTreeFind<cr>
+noremap <leader>t :CtrlP<cr>
+noremap <leader>c :CtrlPClearCache<cr>
+
+" Speedy.vim ********************************************************************
+set ttyfast " u got a fast terminal
+set ttyscroll=3
+set lazyredraw " to avoid scrolling problems
+set timeoutlen=250
+
+" Cursorline/CursorColumn for current window only ****************
+augroup Cursor
+  au!
+  au VimEnter,WinEnter,BufWinEnter * setlocal cursorline
+  au WinLeave * setlocal nocursorline
+  au VimEnter,WinEnter,BufWinEnter * setlocal cursorcolumn
+  au WinLeave * setlocal nocursorcolumn
+augroup END
+
+"CtrlP
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip"
+
+" Syntax off for large files
+"autocmd BufReadPre * if getfsize(expand("%")) > 1000000 | syntax off | endif
+
+"set statusline+=%#warningmsg#
+"set statusline+=%{SyntasticStatuslineFlag()}
+"set statusline+=%*
+
+"let g:syntastic_always_populate_loc_list = 1
+"let g:syntastic_auto_loc_list = 1
+"let g:syntastic_check_on_open = 1
+"let g:syntastic_check_on_wq = 0
+"let g:syntastic_javascript_checkers = ['jshint']
+
+"Coffeescript
+"au BufWritePost *.coffee silent make!
