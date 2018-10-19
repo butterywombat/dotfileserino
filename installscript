@@ -83,7 +83,7 @@ Dir.chdir Dir.home do
     ohai "Updating Homebrew..."
     system 'brew', 'update'
   end
-  brew_packages = %w(git tig zsh python tmux reattach-to-user-namespace hub vim pv mysql node nvm ack)
+  brew_packages = %w(git tig zsh python tmux reattach-to-user-namespace hub vim pv mysql node nvm ag)
   brew(*brew_packages)
 end
 
@@ -143,19 +143,19 @@ ohai "Downloading powerline fonts..."
 %x(curl -L "https://github.com/Lokaltog/powerline-fonts/blob/master/Meslo/#{URI.escape(POWERLINE_FONT)}.otf?raw=true" > #{Dir.home}/Downloads/#{Shellwords.shellescape(POWERLINE_FONT)}.otf)
 
 #TODO Still had to manually configure this shit (do in terminal settings)
-ohai "Configuring terminal theme..."
-%x(curl -L https://raw.githubusercontent.com/tomislav/osx-terminal.app-colors-solarized/master/#{URI.escape(DEFAULT_TERMINAL_THEME)} > ~/Downloads/#{Shellwords.shellescape(DEFAULT_TERMINAL_THEME)})
-%x(open "#{Dir.home}/Downloads/#{DEFAULT_TERMINAL_THEME}")
-%x(sleep 1) # Wait a bit to make sure the theme is loaded
-%x(defaults write com.apple.terminal "Default Window Settings" -string "Solarized Dark")
-%x(defaults write com.apple.terminal "Startup Window Settings" -string "Solarized Dark")
+# ohai "Configuring terminal theme..."
+# %x(curl -L https://raw.githubusercontent.com/tomislav/osx-terminal.app-colors-solarized/master/#{URI.escape(DEFAULT_TERMINAL_THEME)} > ~/Downloads/#{Shellwords.shellescape(DEFAULT_TERMINAL_THEME)})
+# %x(open "#{Dir.home}/Downloads/#{DEFAULT_TERMINAL_THEME}")
+# %x(sleep 1) # Wait a bit to make sure the theme is loaded
+# %x(defaults write com.apple.terminal "Default Window Settings" -string "Solarized Dark")
+# %x(defaults write com.apple.terminal "Startup Window Settings" -string "Solarized Dark")
 
 #ohai "Installing RVM..."
 #%x(curl -sSL https://get.rvm.io | bash -s stable)
 
 ohai "Configuring OSX defaults..."
 %x(defaults write com.apple.dock.plist autohide -bool Yes)
-%x(defaults write com.apple.dock.plist orientation left)
+#%x(defaults write com.apple.dock.plist orientation left)
 %x(defaults write NSGlobalDomain AppleHighlightColor -string "0.764700 0.976500 0.568600")
 #this prevents .DS_Store writes
 %x(defaults write com.apple.desktopservices DSDontWriteNetworkStores true)
@@ -166,16 +166,16 @@ ohai "Configuring OSX defaults..."
 %x(defaults write NSGlobalDomain com.apple.mouse.tapBehavior -int 1)
 %x(sudo nvram SystemAudioVolume=" ")
 
-ohai "Installing Totalterminal"
-Dir.chdir "#{Dir.home}/Downloads" do
-  %x(curl -OL http://downloads.binaryage.com/#{TOTALTERMINAL_FILENAME})
-  %x(hdiutil mount #{TOTALTERMINAL_FILENAME})
-  %x(sudo installer -package /Volumes/TotalTerminal/TotalTerminal.pkg -target /)
-end
+# ohai "Installing Totalterminal"
+# Dir.chdir "#{Dir.home}/Downloads" do
+#   %x(curl -OL http://downloads.binaryage.com/#{TOTALTERMINAL_FILENAME})
+#   %x(hdiutil mount #{TOTALTERMINAL_FILENAME})
+#   %x(sudo installer -package /Volumes/TotalTerminal/TotalTerminal.pkg -target /)
+# end
 
-ohai "Installing node modules"
-%x(npm install -g jshint)
-%x(npm install -g nodemon)
-%x(npm install -g gulp)
+# ohai "Installing node modules"
+# %x(npm install -g jshint)
+# %x(npm install -g nodemon)
+# %x(npm install -g gulp)
 
 ohai "Installation successful!"

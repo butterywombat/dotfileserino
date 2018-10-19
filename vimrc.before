@@ -2,4 +2,5 @@ set shell=/usr/local/bin/zsh
 let mapleader = ","
 let g:airline_powerline_fonts = 1
 "set rtp+=/usr/local/lib/python2.7/site-packages/powerline/bindings/vim
+call janus#disable_plugin('syntastic')
 

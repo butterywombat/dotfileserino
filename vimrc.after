@@ -14,6 +14,9 @@ noremap : ;
 noremap ,n :NERDTreeToggle<CR>
 "shouldn't need this but seems ; : above conflicting
 
+let g:javascript_conceal_function   = "ƒ"
+let g:javascript_conceal_null       = "ø"
+let g:javascript_conceal_this       = "@"
 
 ""!!!!!The following is from skwp/dotfiles/vimrc (yadr)
 "" Use Vim settings, rather then Vi settings (much better!).
@@ -134,7 +137,7 @@ noremap <leader>c :CtrlPClearCache<cr>
 
 " Speedy.vim ********************************************************************
 set ttyfast " u got a fast terminal
-set ttyscroll=3
+" set ttyscroll=3
 set lazyredraw " to avoid scrolling problems
 set timeoutlen=250
 
@@ -148,7 +151,11 @@ augroup Cursor
 augroup END
 
 "CtrlP
-set wildignore+=*/tmp/*,*.so,*.swp,*.zip"
+let g:ctrlp_custom_ignore= {'file': '\.pyc$\|\.pyo$\|\.rbc$|\.rbo$\|\.class$\|\.o$\|\~$\', 'dir': '\v[\/]\.(git|hg|svn)$'}
+let g:ctrlp_max_files=0
+let g:ctrlp_max_depth=40
+let g:ctrlp_user_command = 'ag %s -l --nocolor -g ./'
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip
 
 " Syntax off for large files
 "autocmd BufReadPre * if getfsize(expand("%")) > 1000000 | syntax off | endif
@@ -157,11 +164,36 @@ set wildignore+=*/tmp/*,*.so,*.swp,*.zip"
 "set statusline+=%{SyntasticStatuslineFlag()}
 "set statusline+=%*
 
+" disabled syntastic, going to use ale
 "let g:syntastic_always_populate_loc_list = 1
 "let g:syntastic_auto_loc_list = 1
-"let g:syntastic_check_on_open = 1
-"let g:syntastic_check_on_wq = 0
-"let g:syntastic_javascript_checkers = ['jshint']
+"
+" let g:syntastic_check_on_open = 1
+" let g:syntastic_check_on_wq = 0
+" let g:syntastic_javascript_checkers = ['eslint']
+" let g:syntastic_error_symbol = '❌'
+" let g:syntastic_style_error_symbol = '⁉️'
+" let g:syntastic_warning_symbol = '⚠️'
+" let g:syntastic_style_warning_symbol = '💩'
 
 "Coffeescript
 "au BufWritePost *.coffee silent make!
+"
+nmap s <Plug>(easymotion-s)
+
+" Add spaces after comment delimiters by default
+let g:NERDSpaceDelims = 1
+command! FormatJSON %!python -m json.tool
+
+" change insert cursor to bar
+let &t_SI.="\e[5 q"
+let &t_EI.="\e[1 q"
+
+let g:ale_linters = { 'javascript': ['eslint'] }
+
+" Put this in vimrc or a plugin file of your own.
+" After this is configured, :ALEFix will try and fix your JS code with ESLint.
+let g:ale_fixers = {'javascript': ['eslint']}
+
+noremap <leader>fi :ALEFix<cr>
+
