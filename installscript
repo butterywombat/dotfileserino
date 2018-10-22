@@ -1,3 +1,9 @@
+# install iterm2, gruvbox theme, fira code font with ligs and powerline
+# oh-my-zsh
+# nvm via curl
+# brew install the things below
+# symlink dotfiles from dxuehu/dotfileserino (zshrc, vimrc, tmux)
+
 #!/usr/bin/ruby
 
 require 'fileutils'
@@ -83,7 +89,7 @@ Dir.chdir Dir.home do
     ohai "Updating Homebrew..."
     system 'brew', 'update'
   end
-  brew_packages = %w(git tig zsh python tmux reattach-to-user-namespace hub vim pv mysql node nvm ag)
+  brew_packages = %w(git fzf tig zsh tmux yarn reattach-to-user-namespace hub neovim mysql node nvm ag)
   brew(*brew_packages)
 end
 
@@ -177,5 +183,6 @@ ohai "Configuring OSX defaults..."
 # %x(npm install -g jshint)
 # %x(npm install -g nodemon)
 # %x(npm install -g gulp)
-
+pip3 install neovim # for deoplete
+yarn global add prettier
 ohai "Installation successful!"
