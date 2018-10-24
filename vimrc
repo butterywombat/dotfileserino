@@ -120,7 +120,7 @@ set termguicolors
 
 " keybindings/maps
 " inoremap jk <esc>
-" nnoremap <space> :
+nnoremap <space> :
 nmap <leader>q ysiw'
 " nmap <silent><leader>s :set spell!<CR>
 " nnoremap <leader>nt :NERDTreeToggle<cr>
@@ -129,9 +129,9 @@ nmap ; :Buffers<CR>
 nmap <Leader>t :Files<CR>
 nmap <Leader>r :Tags<CR>
 " find comma, append newline after comma
-" nnoremap <leader>z f,a<cr><esc>
+nnoremap <leader>z f,a<cr><esc>
 " Use Return key to clear search highlighting
-" nmap <CR> :nohlsearch<CR>
+nmap <CR> :nohlsearch<CR>
 autocmd BufReadPost quickfix nmap <buffer> <CR> <CR>
 " Preserve indentation while pasting text from the OS X clipboard
 noremap <leader>p :set paste<CR>:put *<CR>:set nopaste<CR>
@@ -142,7 +142,6 @@ autocmd BufNewFile * silent! 0r $VIMHOME/templates/%:e.tpl
 au BufNewFile,BufRead *.frag,*.vert,*.fp,*.vp,*.glsl setf glsl
 au FileType python setlocal tabstop=8 expandtab shiftwidth=4 softtabstop=4
 set shell=/usr/local/bin/zsh
-let mapleader = ","
 let g:airline_powerline_fonts = 1
 
 " Dani's olde stuff
@@ -151,8 +150,8 @@ let g:airline_powerline_fonts = 1
 " noremap ,gp :!git push<CR>
 " noremap ,gl :!git pull<CR>
 " noremap ,hp :!hub pull-request<CR>
-noremap ; :
-noremap : ;
+" noremap ; :
+" noremap : ;
 noremap ,n :NERDTreeToggle<CR>
 noremap <leader>fi :ALEFix<cr>
 " "shouldn't need this but seems ; : above conflicting
@@ -229,7 +228,7 @@ set undofile
 " set equalalways " Multiple windows, when created, are equal in size
 " set splitbelow splitright
 " 
-:nnoremap <silent> <Space> :nohlsearch<Bar>:echo<CR>
+" :nnoremap <silent> <Space> :nohlsearch<Bar>:echo<CR>
 " 
 " " Status Line *****************************************************************
 " set ruler " Show ruler
@@ -241,7 +240,7 @@ set undofile
 " 
 " " Mapping ********************************************************************
 " noremap <leader>w :up<cr>
-" noremap <leader>f :NERDTreeFind<cr>
+noremap <leader>f :NERDTreeFind<cr>
 " 
 " " Speedy.vim ********************************************************************
 " set ttyfast " u got a fast terminal

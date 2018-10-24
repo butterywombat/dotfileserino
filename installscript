@@ -89,7 +89,7 @@ Dir.chdir Dir.home do
     ohai "Updating Homebrew..."
     system 'brew', 'update'
   end
-  brew_packages = %w(git fzf tig zsh tmux yarn reattach-to-user-namespace hub neovim mysql node nvm ag)
+  brew_packages = %w(git fzf tig zsh tmux yarn reattach-to-user-namespace hub neovim mysql node nvm rg)
   brew(*brew_packages)
 end
 
