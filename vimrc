@@ -20,6 +20,7 @@ Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'bling/vim-airline'
 Plug 'airblade/vim-gitgutter'
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+Plug 'christoomey/vim-tmux-navigator'
 " Tpope
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-fugitive'
@@ -253,8 +254,8 @@ augroup Cursor
   au!
   au VimEnter,WinEnter,BufWinEnter * setlocal cursorline
   au WinLeave * setlocal nocursorline
-  " au VimEnter,WinEnter,BufWinEnter * setlocal cursorcolumn
-  " au WinLeave * setlocal nocursorcolumn
+  au VimEnter,WinEnter,BufWinEnter * setlocal cursorcolumn
+  au WinLeave * setlocal nocursorcolumn
 augroup END
 " 
 " "CtrlP
