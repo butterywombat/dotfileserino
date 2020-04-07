@@ -6,7 +6,7 @@ Plug 'moll/vim-node'
 Plug 'docunext/closetag.vim'
 Plug 'w0rp/ale'
 " Plug 'terryma/vim-multiple-cursors'
-" Plug 'easymotion/vim-easymotion'
+Plug 'easymotion/vim-easymotion'
 " Plug 'Valloric/YouCompleteMe'
 " Plug ap/vim-css-color
 Plug 'bkad/CamelCaseMotion'
@@ -42,8 +42,16 @@ Plug  'mxw/vim-jsx'
 
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
+Plug 'heavenshell/vim-jsdoc'
+
  " This has the limitation that you can't uninstall the extension by using :CocUninstall and that automatic update support is not available.
 Plug 'neoclide/coc-tsserver', {'do': 'yarn install --frozen-lockfile'}
+Plug 'neoclide/coc-html', {'do': 'yarn install --frozen-lockfile'}
+Plug 'neoclide/coc-css', {'do': 'yarn install --frozen-lockfile'}
+Plug 'neoclide/coc-json', {'do': 'yarn install --frozen-lockfile'}
+
+Plug 'glidenote/newdayone.vim'
+
 
 call plug#end()
 
@@ -60,8 +68,12 @@ let g:UltiSnipsJumpBackwardTrigger="<c-k>"
 let g:gitgutter_realtime = 0
 let g:gitgutter_eager = 0
 
-let g:ale_linters = { 'javascript': ['prettier', 'eslint'] }
-let g:ale_fixers = {'javascript': ['prettier', 'eslint']}
+" not sure why this doesn't work - my js picks up conflicting lint errs
+let g:ale_linter_aliases = {'frontend': ['javascript', 'scss']}
+
+let g:ale_linters = {'scss': ['prettier', 'stylelint'], 'javascript': ['prettier', 'eslint']}
+
+let g:ale_fixers = {'scss': ['prettier', 'stylelint'], 'javascript': ['prettier', 'eslint']}
 
 let g:deoplete#enable_at_startup = 1
 
@@ -133,6 +145,11 @@ nmap <leader>q ysiw'
 " nnoremap <leader>nt :NERDTreeToggle<cr>
 nmap <leader>l :set list!<CR>
 nmap ; :Buffers<CR>
+
+" yank and delete line without newline
+noremap yl ^y$
+noremap dl ^d$
+
 nmap <Leader>t :Files<CR>
 nmap <Leader>r :Tags<CR>
 " find comma, append newline after comma
@@ -160,6 +177,7 @@ let g:airline_powerline_fonts = 1
 " noremap ; :
 " noremap : ;
 noremap ,n :NERDTreeToggle<CR>
+noremap <leader>nf :NERDTreeFind<cr>
 noremap <leader>fi :ALEFix<cr>
 " "shouldn't need this but seems ; : above conflicting
 
@@ -247,7 +265,6 @@ set undofile
 " 
 " " Mapping ********************************************************************
 " noremap <leader>w :up<cr>
-noremap <leader>f :NERDTreeFind<cr>
 " 
 " " Speedy.vim ********************************************************************
 " set ttyfast " u got a fast terminal
@@ -278,7 +295,7 @@ augroup END
 " "set statusline+=%{SyntasticStatuslineFlag()}
 " "set statusline+=%*
 " 
-" nmap s <Plug>(easymotion-s)
+nmap s <Plug>(easymotion-s)
 " 
 " Add spaces after comment delimiters by default
 let g:NERDSpaceDelims = 1
@@ -307,6 +324,13 @@ inoremap <silent><expr> <c-space> coc#refresh()
 inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 " Or use `complete_info` if your vim support it, like:
 " inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
+
+" Symbol renaming.
+nmap <leader>rn <Plug>(coc-rename)
+
+" Formatting selected code.
+xmap <leader>f  <Plug>(coc-format-selected)
+nmap <leader>f  <Plug>(coc-format-selected)
 
 " Use `[g` and `]g` to navigate diagnostics
 nmap <silent> [g <Plug>(coc-diagnostic-prev)
@@ -339,6 +363,23 @@ nmap <leader>rn <Plug>(coc-rename)
 xmap <leader>f  <Plug>(coc-format-selected)
 nmap <leader>f  <Plug>(coc-format-selected)
 
+" Applying codeAction to the selected region.
+" Example: `<leader>aap` for current paragraph
+xmap <leader>a  <Plug>(coc-codeaction-selected)
+nmap <leader>a  <Plug>(coc-codeaction-selected)
+
+" Remap keys for applying codeAction to the current line.
+nmap <leader>ac  <Plug>(coc-codeaction)
+" Apply AutoFix to problem on the current line.
+nmap <leader>qf  <Plug>(coc-fix-current)
+
+" Introduce function text object
+" NOTE: Requires 'textDocument.documentSymbol' support from the language server.
+xmap if <Plug>(coc-funcobj-i)
+xmap af <Plug>(coc-funcobj-a)
+omap if <Plug>(coc-funcobj-i)
+omap af <Plug>(coc-funcobj-a)
+
 augroup mygroup
   autocmd!
   " Setup formatexpr specified filetype(s).
@@ -348,3 +389,7 @@ augroup mygroup
 augroup end
 
 " end coc stuff
+"
+let g:jsdoc_allow_input_prompt = 1
+let g:jsdoc_enable_es6 = 1
+let g:jsdoc_underscore_private = 1
