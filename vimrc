@@ -34,6 +34,7 @@ Plug 'ntpeters/vim-better-whitespace' " highlight traling ws
 Plug 'metakirby5/codi.vim'
 " Colorschemes
 Plug 'morhetz/gruvbox'
+Plug 'joshdick/onedark.vim'
 " JS Plugs
 "Plug 'marijnh/tern_for_vim'
 Plug 'schickling/vim-bufonly'
@@ -48,7 +49,9 @@ Plug 'heavenshell/vim-jsdoc'
 Plug 'neoclide/coc-tsserver', {'do': 'yarn install --frozen-lockfile'}
 Plug 'neoclide/coc-html', {'do': 'yarn install --frozen-lockfile'}
 Plug 'neoclide/coc-css', {'do': 'yarn install --frozen-lockfile'}
-Plug 'neoclide/coc-json', {'do': 'yarn install --frozen-lockfile'}
+" Plug 'neoclide/coc-json', {'do': 'yarn install --frozen-lockfile'} " had vim
+" errors for this, maybe justneed to reinstall? yarn installed directly into
+" .coc/extensions
 
 Plug 'glidenote/newdayone.vim'
 
@@ -116,7 +119,6 @@ set sessionoptions=resize,winpos,winsize,buffers,tabpages,folds,curdir,help
 set t_Co=256
 set backspace=2 "
 " set colorcolumn=80
-" let &colorcolumn="80,".join(range(120,999),",")
 let &colorcolumn=join(range(81,999),",")
 highlight ColorColumn ctermbg=235 guibg=#2c2d27
 let &colorcolumn="80,".join(range(120,999),",")
@@ -393,3 +395,6 @@ augroup end
 let g:jsdoc_allow_input_prompt = 1
 let g:jsdoc_enable_es6 = 1
 let g:jsdoc_underscore_private = 1
+
+" json c (with comments for cocconfig)
+" autocmd FileType json syntax match Comment +\/\/.\+$+

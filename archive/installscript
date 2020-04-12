@@ -80,6 +80,9 @@ EOABORT
 #ohai "Updating RubyGems..."
 #%(sudo gem update --system)
 
+# also install nerd fonts for powerline, hammerspoon
+# curl -L https://get.oh-my.fish | fish
+
 #TODO problem here, brew doesn't install?
 Dir.chdir Dir.home do
   if Dir["/usr/local/.git/*"].empty?
@@ -89,7 +92,7 @@ Dir.chdir Dir.home do
     ohai "Updating Homebrew..."
     system 'brew', 'update'
   end
-  brew_packages = %w(git fzf tig zsh tmux yarn reattach-to-user-namespace hub neovim mysql node nvm rg)
+  brew_packages = %w(git fzf tig zsh fish tmux yarn reattach-to-user-namespace hub neovim mysql node nvm rg)
   brew(*brew_packages)
 end
 
@@ -183,6 +186,6 @@ ohai "Configuring OSX defaults..."
 # %x(npm install -g jshint)
 # %x(npm install -g nodemon)
 # %x(npm install -g gulp)
-pip3 install neovim # for deoplete
+# pip3 install neovim # for deoplete
 yarn global add prettier
 ohai "Installation successful!"
