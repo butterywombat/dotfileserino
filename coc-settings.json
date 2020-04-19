@@ -15,11 +15,14 @@
     "css",
     "markdown"
   ],
-  "eslint.filetypes": [ // needed?
+  "eslint.filetypes": [
+    // needed?
     "javascript",
     "json",
     "typescript",
     "typescriptreact",
     "javascriptreact"
-  ]
+  ],
+  "git.addGBlameToVirtualText": true,
+  "git.enableGutters": false
 }

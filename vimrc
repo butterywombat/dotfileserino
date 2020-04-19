@@ -19,7 +19,7 @@ Plug 'scrooloose/nerdtree', {'on': ['NERDTreeToggle', 'NERDTreeFind']}
 
 Plug 'Xuyuanp/nerdtree-git-plugin'
 " General crap
-Plug 'bling/vim-airline'
+Plug 'vim-airline/vim-airline'
 Plug 'airblade/vim-gitgutter'
 " Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' } " trying coc
 Plug 'christoomey/vim-tmux-navigator'
@@ -55,6 +55,7 @@ Plug 'neoclide/coc-stylelint', {'do': 'yarn install --frozen-lockfile'}
 " Plug 'neoclide/coc-prettier', {'do': 'yarn install --frozen-lockfile'}
 Plug 'neoclide/coc-html', {'do': 'yarn install --frozen-lockfile'}
 Plug 'neoclide/coc-css', {'do': 'yarn install --frozen-lockfile'}
+Plug 'neoclide/coc-git', {'do': 'yarn install --frozen-lockfile'}
 " Plug 'neoclide/coc-json', {'do': 'yarn install --frozen-lockfile'} " had vim
 " errors for this, maybe justneed to reinstall? yarn installed directly into
 " .coc/extensions
@@ -426,6 +427,9 @@ command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organize
 " Add (Neo)Vim's native statusline support.
 " NOTE: Please see `:h coc-status` for integrations with external plugins that
 " provide custom statusline: lightline.vim, vim-airline.
+autocmd User CocGitStatusChange {command}
+let g:airline_section_y = "%{get(b:, 'coc_git_blame', '')}"
+
 " set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 
 " Mappings using CoCList:
