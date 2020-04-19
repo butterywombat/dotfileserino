@@ -1,0 +1,25 @@
+{
+  "javascript": {
+    "showUnused": true
+  },
+  "prettier": {
+    "eslintIntegration": true,
+    "stylelintIntegration": true
+  },
+  "coc.preferences.formatOnSaveFiletypes": [
+    "javascript",
+    "typescript",
+    "typescriptreact",
+    "json",
+    "javascriptreact",
+    "css",
+    "markdown"
+  ],
+  "eslint.filetypes": [ // needed?
+    "javascript",
+    "json",
+    "typescript",
+    "typescriptreact",
+    "javascriptreact"
+  ]
+}

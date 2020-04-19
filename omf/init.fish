@@ -1,8 +1,8 @@
-if not set -q TMUX
-    set -g TMUX tmux new-session -d -s base
-    eval $TMUX
-    tmux attach-session -d -t base
-end
+# if not set -q TMUX
+#     set -g TMUX tmux new-session -d -s base
+#     eval $TMUX
+#     tmux attach-session -d -t base
+# end
 
 fish_vi_key_bindings
 set -U EDITOR nvim
@@ -21,8 +21,7 @@ alias vim='nvim'
 alias vimdiff='nvim -d'
 alias l='ls -la'
 
-alias t='tmux'
-alias hok='z ui && wa'
+alias t='tmux' #alias hok='z ui && wa'
 alias dayone='dayone2'
 
 alias godebug="export NODE_ENV='lcdev' node --inspect ./ | bunyan"

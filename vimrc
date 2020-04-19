@@ -1,10 +1,11 @@
 call plug#begin('~/.vim/plugged')
+Plug 'dstein64/vim-startuptime', {'on': 'StartupTime'}
 Plug '/usr/local/opt/fzf'
-Plug 'junegunn/fzf.vim'
-Plug 'mustache/vim-mustache-handlebars'
+Plug 'junegunn/fzf.vim', {'on': 'Files'}
+Plug 'mustache/vim-mustache-handlebars', {'for': 'handlebars'}
 Plug 'moll/vim-node'
 Plug 'docunext/closetag.vim'
-Plug 'w0rp/ale'
+" Plug 'w0rp/ale', {'on': 'ALEFix'}
 " Plug 'terryma/vim-multiple-cursors'
 Plug 'easymotion/vim-easymotion'
 " Plug 'Valloric/YouCompleteMe'
@@ -14,7 +15,8 @@ Plug 'Raimondi/delimitMate'
 " Plug 'sjl/gundo.vim'
 " Plug 'majutsushi/tagbar' maybe
 Plug 'scrooloose/nerdcommenter'
-Plug 'scrooloose/nerdtree'
+Plug 'scrooloose/nerdtree', {'on': ['NERDTreeToggle', 'NERDTreeFind']}
+
 Plug 'Xuyuanp/nerdtree-git-plugin'
 " General crap
 Plug 'bling/vim-airline'
@@ -25,28 +27,32 @@ Plug 'christoomey/vim-tmux-navigator'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-fugitive'
 " Plug 'tpope/vim-repeat'
-Plug 'tpope/vim-unimpaired'
+" Plug 'tpope/vim-unimpaired'
 " Plug 'Shougo/vimproc'
 " Snippets
-Plug 'SirVer/ultisnips'
-Plug 'honza/vim-snippets'
+" Plug 'SirVer/ultisnips'
+" Plug 'honza/vim-snippets'
 Plug 'ntpeters/vim-better-whitespace' " highlight traling ws
-Plug 'metakirby5/codi.vim'
+Plug 'metakirby5/codi.vim', {'on': 'Codi'}
 " Colorschemes
 Plug 'morhetz/gruvbox'
-Plug 'joshdick/onedark.vim'
+" Plug 'joshdick/onedark.vim'
 " JS Plugs
 "Plug 'marijnh/tern_for_vim'
-Plug 'schickling/vim-bufonly'
-Plug 'pangloss/vim-javascript'
+" Plug 'schickling/vim-bufonly'
+Plug 'pangloss/vim-javascript', {'for': 'javascript'}
 Plug  'mxw/vim-jsx'
 
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'neoclide/coc.nvim', {'branch': 'release'} ", 'on': 'CocAction'}
 
-Plug 'heavenshell/vim-jsdoc'
+Plug 'heavenshell/vim-jsdoc', {'for': 'javascript'}
 
  " This has the limitation that you can't uninstall the extension by using :CocUninstall and that automatic update support is not available.
 Plug 'neoclide/coc-tsserver', {'do': 'yarn install --frozen-lockfile'}
+Plug 'neoclide/coc-prettier', {'do': 'yarn install --frozen-lockfile'}
+Plug 'neoclide/coc-eslint', {'do': 'yarn install --frozen-lockfile'}
+Plug 'neoclide/coc-stylelint', {'do': 'yarn install --frozen-lockfile'}
+" Plug 'neoclide/coc-prettier', {'do': 'yarn install --frozen-lockfile'}
 Plug 'neoclide/coc-html', {'do': 'yarn install --frozen-lockfile'}
 Plug 'neoclide/coc-css', {'do': 'yarn install --frozen-lockfile'}
 " Plug 'neoclide/coc-json', {'do': 'yarn install --frozen-lockfile'} " had vim
@@ -64,19 +70,17 @@ call camelcasemotion#CreateMotionMappings('<leader>')
 let delimitMate_expand_cr = 1
 let delimitMate_expand_space = 1
 let g:signify_sign_overwrite = 0
-let g:UltiSnipsExpandTrigger="<c-j>"
-let g:UltiSnipsJumpForwardTrigger="<c-j>"
-let g:UltiSnipsJumpBackwardTrigger="<c-k>"
+" let g:UltiSnipsExpandTrigger="<c-j>"
+" let g:UltiSnipsJumpForwardTrigger="<c-j>"
+" let g:UltiSnipsJumpBackwardTrigger="<c-k>"
 "let g:tern_map_keys=1
 let g:gitgutter_realtime = 0
 let g:gitgutter_eager = 0
 
 " not sure why this doesn't work - my js picks up conflicting lint errs
-let g:ale_linter_aliases = {'frontend': ['javascript', 'scss']}
-
-let g:ale_linters = {'scss': ['prettier', 'stylelint'], 'javascript': ['prettier', 'eslint']}
-
-let g:ale_fixers = {'scss': ['prettier', 'stylelint'], 'javascript': ['prettier', 'eslint']}
+" let g:ale_linter_aliases = {'frontend': ['javascript', 'scss']}
+" let g:ale_linters = {'scss': ['prettier', 'stylelint'], 'javascript': ['prettier', 'eslint']}
+" let g:ale_fixers = {'scss': ['prettier', 'stylelint'], 'javascript': ['prettier', 'eslint']}
 
 let g:deoplete#enable_at_startup = 1
 
@@ -152,6 +156,9 @@ nmap ; :Buffers<CR>
 noremap yl ^y$
 noremap dl ^d$
 
+" go to end of line while in insert mode, stay in insert mode
+inoremap <C-e> <C-o>A
+
 nmap <Leader>t :Files<CR>
 nmap <Leader>r :Tags<CR>
 " find comma, append newline after comma
@@ -167,8 +174,10 @@ nnoremap dp :diffput<cr>
 autocmd BufNewFile * silent! 0r $VIMHOME/templates/%:e.tpl
 au BufNewFile,BufRead *.frag,*.vert,*.fp,*.vp,*.glsl setf glsl
 au FileType python setlocal tabstop=8 expandtab shiftwidth=4 softtabstop=4
-set shell=/usr/local/bin/zsh
+set shell=/usr/local/bin/fish
 let g:airline_powerline_fonts = 1
+let g:airline#extensions#tabline#enabled = 1
+
 
 " Dani's olde stuff
 " "!!!From my old vimrc
@@ -180,7 +189,7 @@ let g:airline_powerline_fonts = 1
 " noremap : ;
 noremap ,n :NERDTreeToggle<CR>
 noremap <leader>nf :NERDTreeFind<cr>
-noremap <leader>fi :ALEFix<cr>
+" noremap <leader>fi :ALEFix<cr>
 " "shouldn't need this but seems ; : above conflicting
 
  let g:javascript_conceal_function   = "ƒ"
@@ -289,23 +298,33 @@ augroup END
 " let g:ctrlp_max_depth=40
 " let g:ctrlp_user_command = 'ag %s -l --nocolor -g ./'
 " set wildignore+=*/tmp/*,*.so,*.swp,*.zip
-" 
+
 " " Syntax off for large files
 " "autocmd BufReadPre * if getfsize(expand("%")) > 1000000 | syntax off | endif
-" 
+
 " "set statusline+=%#warningmsg#
 " "set statusline+=%{SyntasticStatuslineFlag()}
 " "set statusline+=%*
-" 
+
 nmap s <Plug>(easymotion-s)
-" 
+
 " Add spaces after comment delimiters by default
 let g:NERDSpaceDelims = 1
 command! FormatJSON %!python -m json.tool
 " autocmd BufNewFile,BufRead *.json set ft=javascript
 "
 "Coc stuff
-" " Use tab for trigger completion with characters ahead and navigate.
+let g:coc_node_path = '/Users/xhu/.nvm/versions/node/v13.13.0/bin/node' "use more updated node
+command! -nargs=0 Prettier :CocCommand prettier.formatFile
+
+" Don't pass messages to |ins-completion-menu|.
+set shortmess+=c
+
+" Always show the signcolumn, otherwise it would shift the text each time
+" diagnostics appear/become resolved.
+set signcolumn=yes
+
+" Use tab for trigger completion with characters ahead and navigate.
 " Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
 inoremap <silent><expr> <TAB>
       \ pumvisible() ? "\<C-n>" :
@@ -321,28 +340,34 @@ endfunction
 " Use <c-space> to trigger completion.
 inoremap <silent><expr> <c-space> coc#refresh()
 
-" Use <cr> to confirm completion, `<C-g>u` means break undo chain at current position.
-" Coc only does snippet and additional edit on confirm.
-inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
-" Or use `complete_info` if your vim support it, like:
-" inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
-
-" Symbol renaming.
-nmap <leader>rn <Plug>(coc-rename)
-
-" Formatting selected code.
-xmap <leader>f  <Plug>(coc-format-selected)
-nmap <leader>f  <Plug>(coc-format-selected)
+" Use <cr> to confirm completion, `<C-g>u` means break undo chain at current
+" position. Coc only does snippet and additional edit on confirm.
+if exists('*complete_info')
+  inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
+else
+  imap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+endif
 
 " Use `[g` and `]g` to navigate diagnostics
 nmap <silent> [g <Plug>(coc-diagnostic-prev)
 nmap <silent> ]g <Plug>(coc-diagnostic-next)
 
-" Remap keys for gotos
+" GoTo code navigation.
 nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
+
+" Use K to show documentation in preview window.
+nnoremap <silent> K :call <SID>show_documentation()<CR>
+
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  else
+    call CocAction('doHover')
+  endif
+endfunction
 
 " Use K to show documentation in preview window
 nnoremap <silent> K :call <SID>show_documentation()<CR>
@@ -356,12 +381,12 @@ function! s:show_documentation()
 endfunction
 
 " Highlight symbol under cursor on CursorHold
-autocmd CursorHold * silent call CocActionAsync('highlight')
+" autocmd CursorHold * silent call CocActionAsync('highlight')
 
-" Remap for rename current word
+" Symbol renaming.
 nmap <leader>rn <Plug>(coc-rename)
 
-" Remap for format selected region
+" Formatting selected code.
 xmap <leader>f  <Plug>(coc-format-selected)
 nmap <leader>f  <Plug>(coc-format-selected)
 
@@ -382,13 +407,44 @@ xmap af <Plug>(coc-funcobj-a)
 omap if <Plug>(coc-funcobj-i)
 omap af <Plug>(coc-funcobj-a)
 
-augroup mygroup
-  autocmd!
-  " Setup formatexpr specified filetype(s).
-  autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
-  " Update signature help on jump placeholder
-  autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
-augroup end
+" Use <TAB> for selections ranges.
+" NOTE: Requires 'textDocument/selectionRange' support from the language server.
+" coc-tsserver, coc-python are the examples of servers that support it.
+nmap <silent> <TAB> <Plug>(coc-range-select)
+xmap <silent> <TAB> <Plug>(coc-range-select)
+
+" Add `:Format` command to format current buffer.
+command! -nargs=0 Format :call CocAction('format')
+noremap <leader>fi :Format<cr>
+
+" Add `:Fold` command to fold current buffer.
+command! -nargs=? Fold :call     CocAction('fold', <f-args>)
+
+" Add `:OR` command for organize imports of the current buffer.
+command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organizeImport')
+
+" Add (Neo)Vim's native statusline support.
+" NOTE: Please see `:h coc-status` for integrations with external plugins that
+" provide custom statusline: lightline.vim, vim-airline.
+" set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
+
+" Mappings using CoCList:
+" Show all diagnostics.
+" nnoremap <silent> <space>a  :<C-u>CocList diagnostics<cr>
+" " Manage extensions.
+" nnoremap <silent> <space>e  :<C-u>CocList extensions<cr>
+" " Show commands.
+" nnoremap <silent> <space>c  :<C-u>CocList commands<cr>
+" " Find symbol of current document.
+" nnoremap <silent> <space>o  :<C-u>CocList outline<cr>
+" " Search workspace symbols.
+" nnoremap <silent> <space>s  :<C-u>CocList -I symbols<cr>
+" " Do default action for next item.
+" nnoremap <silent> <space>j  :<C-u>CocNext<CR>
+" " Do default action for previous item.
+" nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
+" " Resume latest coc list.
+" nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
 
 " end coc stuff
 "
@@ -398,3 +454,12 @@ let g:jsdoc_underscore_private = 1
 
 " json c (with comments for cocconfig)
 " autocmd FileType json syntax match Comment +\/\/.\+$+
+
+" \ -g "*.{js,json,php,md,styl,jade,html,config,py,cpp,c,go,hs,rb,conf}"
+" \ -g "!*.{min.js,swp,o,zip}"
+let g:rg_command = '
+  \ rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --follow --hidden --vimgrep --color "always"
+  \ -g "!{.git,node_modules,vendor}/*" '
+
+" F seems a little different than Rg. can do F require('path') but Rg doesn't find. Rg <enter> then require('path') seems to work though.
+command! -bang -nargs=* F call fzf#vim#grep(g:rg_command .shellescape(<q-args>), 1, fzf#vim#with_preview(), <bang>0)
