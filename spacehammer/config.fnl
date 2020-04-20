@@ -47,10 +47,13 @@
 ;;
 ;; [x] w - windows/apps
 ;; [x] |-- l - last window
+;; [x] |-- k - kitty
 ;; [x] |-- g - chrome
-;; [x] |-- f - firefox
+;; [x] |-- w - webstorm
+;; [x] |-- s - slack
+;; [x] |-- t - texts
 ;; [x] |-- i - icalendar
-;; [x] |-- s - Slack
+;; [x] |-- m - music
 ;;
 ;; [x] j - jump
 ;;
@@ -74,7 +77,8 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Initialize
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(vim.enable)
+{:vim {:enabled true}}
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Actions
@@ -94,6 +98,51 @@
   "
   (fn activate []
     (windows.activate-app app-name)))
+
+;; hs.hotkey.bind({}, "F15", function()
+;;   local app = hs.application.get("kitty")
+;; 
+;;   if app then
+;;       if not app:mainWindow() then
+;;           app:selectMenuItem({"kitty", "New OS window"})
+;;       elseif app:isFrontmost() then
+;;           app:hide()
+;;       else
+;;           app:activate()
+;;       end
+;;   else
+;;       hs.application.launchOrFocus("kitty")
+;;       app = hs.application.get("kitty")
+;;   end
+;; 
+;;   app:mainWindow():moveToUnit'[100,50,0,0]'
+;;   app:mainWindow().setShadows(false)
+;; end)
+
+(fn toggle-app
+  [app-name]
+  "
+  A simple action function to toggle an app.
+  "
+  (hs.application.launchOrFocus app-name)
+  (let [app (hs.application.find app-name)]
+    (when app
+      (if (: app :isFrontmost)
+        (: app :hide)
+        (
+          (: app :activate)
+          (: app :unhide))))))
+
+(fn toggler
+  [app-name]
+  "
+  A higher order function to toggle a target app. It's useful for quickly
+  binding a modal menu action or hotkey action to launch or focus on an app.
+  Takes a string application name
+  Returns a function to toggle that app.
+  "
+  (fn toggle []
+    (toggle-app app-name)))
 
 (fn toggle-console
   []
@@ -323,8 +372,16 @@
          :items media-bindings}
          ])
 
+;; try alt k maybe as toggle for kitty
+;; TODO does hammerspoon support double tap?
+;; map 'back' to toggle current window rather than go back to previous
+
 (local common-keys
-       [{:mods [:alt]
+       [{:mods [:cmd]
+         :key :k
+         :repeatable false
+         :action (toggler "Kitty")}
+       {:mods [:alt]
          :key :space
          :action "lib.modal:activate-modal"}
         {:mods [:alt]
