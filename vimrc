@@ -22,7 +22,8 @@ Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'vim-airline/vim-airline'
 Plug 'airblade/vim-gitgutter'
 " Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' } " trying coc
-Plug 'christoomey/vim-tmux-navigator'
+" Plug 'christoomey/vim-tmux-navigator'
+Plug 'knubie/vim-kitty-navigator'
 " Tpope
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-fugitive'

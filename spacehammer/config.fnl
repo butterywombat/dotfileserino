@@ -77,8 +77,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Initialize
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-{:vim {:enabled true}}
-
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Actions
@@ -121,17 +119,12 @@
 
 (fn toggle-app
   [app-name]
-  "
-  A simple action function to toggle an app.
-  "
-  (hs.application.launchOrFocus app-name)
   (let [app (hs.application.find app-name)]
-    (when app
-      (if (: app :isFrontmost)
-        (: app :hide)
-        (
-          (: app :activate)
-          (: app :unhide))))))
+    (if (and app (app:isFrontmost))
+        (app:hide)
+        (do
+          (hs.application.launchOrFocus app-name)
+          (app:unhide)))))
 
 (fn toggler
   [app-name]
@@ -311,6 +304,9 @@
         {:key :c
          :title "Chrome"
          :action (activator "Google Chrome")}
+        {:key :k
+         :title "Kitty"
+         :action (activator "Kitty")}
         {:key :w
          :title "Webstorm"
          :action (activator "Webstorm")}
@@ -422,11 +418,6 @@
         :keys browser-keys
         :items browser-items})
 
-(local firefox-config
-       {:key "Firefox"
-        :keys browser-keys
-        :items browser-items})
-
 (local hammerspoon-config
        {:key "Hammerspoon"
         :items (concat
@@ -490,7 +481,6 @@
 (local apps
        [
         chrome-config
-        firefox-config
         hammerspoon-config
         slack-config])
 
@@ -500,6 +490,9 @@
         :keys common-keys
         :apps apps
         :hyper {:key :F18}})
+;; :vim {:enabled true}
+;; need a way to toggle vim mode easily or specify apps that shouldn't use it (such as vim)
+;; would like to see basic operators - d y p, t/f
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Exports
