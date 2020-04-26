@@ -1,6 +1,6 @@
 {
   "javascript": {
-    "showUnused": true
+    "showUnused": true // not working?
   },
   "prettier": {
     "eslintIntegration": true,

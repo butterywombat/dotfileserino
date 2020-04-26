@@ -5,7 +5,9 @@ Plug 'junegunn/fzf.vim', {'on': 'Files'}
 Plug 'mustache/vim-mustache-handlebars', {'for': 'handlebars'}
 Plug 'moll/vim-node'
 Plug 'docunext/closetag.vim'
-" Plug 'w0rp/ale', {'on': 'ALEFix'}
+Plug 'dense-analysis/ale', {'on': 'ALEFix'}
+" unfortunately seems like prettier-stylelint (even prettier-stylelint-temp) not being maintained well, it's
+" not working for me. can investigate later. so need ale for at least css
 " Plug 'terryma/vim-multiple-cursors'
 Plug 'easymotion/vim-easymotion'
 " Plug 'Valloric/YouCompleteMe'
@@ -81,8 +83,8 @@ let g:gitgutter_eager = 0
 
 " not sure why this doesn't work - my js picks up conflicting lint errs
 " let g:ale_linter_aliases = {'frontend': ['javascript', 'scss']}
-" let g:ale_linters = {'scss': ['prettier', 'stylelint'], 'javascript': ['prettier', 'eslint']}
-" let g:ale_fixers = {'scss': ['prettier', 'stylelint'], 'javascript': ['prettier', 'eslint']}
+let g:ale_linters = {'scss': ['prettier', 'stylelint'], 'javascript': ['prettier', 'eslint']}
+let g:ale_fixers = {'scss': ['prettier', 'stylelint'], 'javascript': ['prettier', 'eslint']}
 
 let g:deoplete#enable_at_startup = 1
 
@@ -191,7 +193,8 @@ let g:airline#extensions#tabline#enabled = 1
 " noremap : ;
 noremap ,n :NERDTreeToggle<CR>
 noremap <leader>nf :NERDTreeFind<cr>
-" noremap <leader>fi :ALEFix<cr>
+" let NERDTreeHighlightCursorline = 0 " may help with slowness, but it didn't seem to
+noremap <leader>al :ALEFix<cr>
 " "shouldn't need this but seems ; : above conflicting
 
  let g:javascript_conceal_function   = "ƒ"
@@ -280,7 +283,7 @@ set undofile
 " noremap <leader>w :up<cr>
 " 
 " " Speedy.vim ********************************************************************
-" set ttyfast " u got a fast terminal
+set ttyfast " u got a fast terminal
 " " set ttyscroll=3
 set lazyredraw " to avoid scrolling problems
 " set timeoutlen=250
@@ -371,17 +374,6 @@ function! s:show_documentation()
   endif
 endfunction
 
-" Use K to show documentation in preview window
-nnoremap <silent> K :call <SID>show_documentation()<CR>
-
-function! s:show_documentation()
-  if (index(['vim','help'], &filetype) >= 0)
-    execute 'h '.expand('<cword>')
-  else
-    call CocAction('doHover')
-  endif
-endfunction
-
 " Highlight symbol under cursor on CursorHold
 " autocmd CursorHold * silent call CocActionAsync('highlight')
 
@@ -429,7 +421,7 @@ command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organize
 " NOTE: Please see `:h coc-status` for integrations with external plugins that
 " provide custom statusline: lightline.vim, vim-airline.
 autocmd User CocGitStatusChange {command}
-let g:airline_section_y = "%{get(b:, 'coc_git_blame', '')}"
+let g:airline_section_y = "%{get(b:, 'coc_git_blame', 'yo')}"
 
 " set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 
@@ -465,6 +457,8 @@ let g:jsdoc_underscore_private = 1
 let g:rg_command = '
   \ rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --follow --hidden --vimgrep --color "always"
   \ -g "!{.git,node_modules,vendor}/*" '
+" note --vimgrep takes over the previously set --hidden :( so easiest to find
+" in hidden with F. but need vimgrep for preview window for some reason until I redo that part manually
 
 " F seems a little different than Rg. can do F require('path') but Rg doesn't find. Rg <enter> then require('path') seems to work though.
 command! -bang -nargs=* F call fzf#vim#grep(g:rg_command .shellescape(<q-args>), 1, fzf#vim#with_preview(), <bang>0)
