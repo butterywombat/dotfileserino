@@ -65,11 +65,6 @@
 ;; [x] |-- s - play\pause
 ;; [x] |-- a - launch player
 ;;
-;; [x] |-- c - capture
-;; [x] |-- z - note
-;; [x] |-- f - fullscreen
-;; [x] |-- v - split
-;;
 ;; [x] cmd-n - next-app
 ;; [x] cmd-p - prev-app
 
@@ -79,6 +74,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
 ;; Actions
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -342,7 +338,7 @@
          :title "Volume Up"
          :action "multimedia:volume-up"
          :repeatable true}
-        {:key :a
+        {:key :m
          :title (.. "Launch " music-app)
          :action (activator music-app)}])
 
@@ -377,13 +373,13 @@
          :key :k
          :repeatable false
          :action (toggler "Kitty")}
-       {:mods [:alt]
+       {:mods [:cmd]
          :key :space
          :action "lib.modal:activate-modal"}
-        {:mods [:alt]
+        {:mods [:cmd]
          :key :n
          :action "apps:next-app"}
-        {:mods [:alt]
+        {:mods [:cmd :ctrl]
          :key :p
          :action "apps:prev-app"}
         {:mods [:cmd :ctrl]

@@ -4,7 +4,7 @@ Plug '/usr/local/opt/fzf'
 Plug 'junegunn/fzf.vim', {'on': 'Files'}
 Plug 'mustache/vim-mustache-handlebars', {'for': 'handlebars'}
 Plug 'moll/vim-node'
-Plug 'docunext/closetag.vim'
+Plug 'alvan/vim-closetag'
 Plug 'dense-analysis/ale', {'on': 'ALEFix'}
 " unfortunately seems like prettier-stylelint (even prettier-stylelint-temp) not being maintained well, it's
 " not working for me. can investigate later. so need ale for at least css
@@ -16,8 +16,8 @@ Plug 'bkad/CamelCaseMotion'
 Plug 'Raimondi/delimitMate'
 " Plug 'sjl/gundo.vim'
 " Plug 'majutsushi/tagbar' maybe
-Plug 'scrooloose/nerdcommenter'
-Plug 'scrooloose/nerdtree', {'on': ['NERDTreeToggle', 'NERDTreeFind']}
+Plug 'preservim/nerdcommenter'
+Plug 'preservim/nerdtree', {'on': ['NERDTreeToggle', 'NERDTreeFind']}
 
 Plug 'Xuyuanp/nerdtree-git-plugin'
 " General crap
@@ -191,6 +191,8 @@ let g:airline#extensions#tabline#enabled = 1
 " noremap ,hp :!hub pull-request<CR>
 " noremap ; :
 " noremap : ;
+let NERDTreeShowHidden=1
+
 noremap ,n :NERDTreeToggle<CR>
 noremap <leader>nf :NERDTreeFind<cr>
 " let NERDTreeHighlightCursorline = 0 " may help with slowness, but it didn't seem to
@@ -312,6 +314,7 @@ augroup END
 " "set statusline+=%*
 
 nmap s <Plug>(easymotion-s)
+xmap s <Plug>(easymotion-s)
 
 " Add spaces after comment delimiters by default
 let g:NERDSpaceDelims = 1
@@ -404,8 +407,8 @@ omap af <Plug>(coc-funcobj-a)
 " Use <TAB> for selections ranges.
 " NOTE: Requires 'textDocument/selectionRange' support from the language server.
 " coc-tsserver, coc-python are the examples of servers that support it.
-nmap <silent> <TAB> <Plug>(coc-range-select)
-xmap <silent> <TAB> <Plug>(coc-range-select)
+nmap <silent> <S-tab> <Plug>(coc-range-select)
+xmap <silent> <S-tab> <Plug>(coc-range-select)
 
 " Add `:Format` command to format current buffer.
 command! -nargs=0 Format :call CocAction('format')
@@ -443,6 +446,19 @@ let g:airline_section_y = "%{get(b:, 'coc_git_blame', 'yo')}"
 " " Resume latest coc list.
 " nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
 
+" navigate chunks of current buffer
+nmap [g <Plug>(coc-git-prevchunk)
+nmap ]g <Plug>(coc-git-nextchunk)
+" show chunk diff at current position
+nmap gs <Plug>(coc-git-chunkinfo)
+" show commit contains current position
+nmap gc <Plug>(coc-git-commit)
+" create text object for git chunks
+omap ig <Plug>(coc-git-chunk-inner)
+xmap ig <Plug>(coc-git-chunk-inner)
+omap ag <Plug>(coc-git-chunk-outer)
+xmap ag <Plug>(coc-git-chunk-outer)
+
 " end coc stuff
 "
 let g:jsdoc_allow_input_prompt = 1
@@ -462,3 +478,46 @@ let g:rg_command = '
 
 " F seems a little different than Rg. can do F require('path') but Rg doesn't find. Rg <enter> then require('path') seems to work though.
 command! -bang -nargs=* F call fzf#vim#grep(g:rg_command .shellescape(<q-args>), 1, fzf#vim#with_preview(), <bang>0)
+
+" vim-closetag
+"" filenames like *.xml, *.html, *.xhtml, ...
+" These are the file extensions where this plugin is enabled.
+"
+let g:closetag_filenames = '*.html,*.xhtml,*.phtml'
+
+" filenames like *.xml, *.xhtml, ...
+" This will make the list of non-closing tags self-closing in the specified files.
+"
+let g:closetag_xhtml_filenames = '*.xhtml,*.jsx'
+
+" filetypes like xml, html, xhtml, ...
+" These are the file types where this plugin is enabled.
+"
+let g:closetag_filetypes = 'html,xhtml,phtml'
+
+" filetypes like xml, xhtml, ...
+" This will make the list of non-closing tags self-closing in the specified files.
+"
+let g:closetag_xhtml_filetypes = 'xhtml,jsx'
+
+" integer value [0|1]
+" This will make the list of non-closing tags case-sensitive (e.g. `<Link>` will be closed while `<link>` won't.)
+"
+let g:closetag_emptyTags_caseSensitive = 1
+
+" dict
+" Disables auto-close if not in a "valid" region (based on filetype)
+"
+let g:closetag_regions = {
+    \ 'typescript.tsx': 'jsxRegion,tsxRegion',
+    \ 'javascript.jsx': 'jsxRegion',
+   \ }
+
+" Shortcut for closing tags, default is '>'
+"
+let g:closetag_shortcut = '>'
+
+" Add > at current position without closing the current tag, default is ''
+"
+let g:closetag_close_shortcut = '<leader>>'
+" end vim-closetags

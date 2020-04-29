@@ -24,5 +24,6 @@
     "javascriptreact"
   ],
   "git.addGBlameToVirtualText": true,
+  "git.addGBlameToBufferVar": true,
   "git.enableGutters": false
 }
