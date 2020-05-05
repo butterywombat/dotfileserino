@@ -47,12 +47,13 @@
 ;;
 ;; [x] w - windows/apps
 ;; [x] |-- l - last window
-;; [x] |-- k - kitty
-;; [x] |-- g - chrome
+;; [x] |-- r - roam
+;; [x] |-- b - brave
 ;; [x] |-- w - webstorm
 ;; [x] |-- s - slack
 ;; [x] |-- t - texts
-;; [x] |-- i - icalendar
+;; [x] |-- c - calendar
+;; [x] |-- d - discord
 ;; [x] |-- m - music
 ;;
 ;; [x] j - jump
@@ -297,12 +298,12 @@
         {:key :l
           :title "Last window"
           :action "windows:jump-to-last-window"}
-        {:key :c
-         :title "Chrome"
-         :action (activator "Google Chrome")}
-        {:key :k
-         :title "Kitty"
-         :action (activator "Kitty")}
+        {:key :b
+         :title "Brave"
+         :action (activator "Brave")}
+        {:key :r
+         :title "Roam"
+         :action (activator "Roam")}
         {:key :w
          :title "Webstorm"
          :action (activator "Webstorm")}
@@ -312,9 +313,12 @@
         {:key :t
          :title "Texts"
          :action (activator "Messages")}
-        {:key :i
-         :title "ICalendar"
+        {:key :c
+         :title "Calendar"
          :action (activator "Calendar")}
+        {:key :d
+         :title "Discord"
+         :action (activator "Discord")}
         {:key :m
          :title music-app
          :action (activator music-app)}])
@@ -410,7 +414,7 @@
         []))
 
 (local chrome-config
-       {:key "Google Chrome"
+       {:key "Brave"
         :keys browser-keys
         :items browser-items})
 
