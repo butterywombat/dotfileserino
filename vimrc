@@ -77,6 +77,19 @@ Plug 'neoclide/coc-git', {'do': 'yarn install --frozen-lockfile'}
 call plug#end()
 
 let mapleader=","
+
+let NERDTreeShowHidden=1
+noremap ,n :NERDTreeToggle<CR>
+noremap <leader>nf :NERDTreeFind<cr>
+" let NERDTreeHighlightCursorline = 0 " may help with slowness, but it didn't seem to
+noremap <leader>al :ALEFix<cr>
+" shouldn't need this but seems ; : above conflicting
+
+let g:airline_powerline_fonts = 1
+
+" display all buffers when only one tab open
+let g:airline#extensions#tabline#enabled = 1
+
 call camelcasemotion#CreateMotionMappings('<leader>')
 " Plugin settings
 let delimitMate_expand_cr = 1
@@ -130,17 +143,17 @@ set tabstop=2
 set shiftwidth=2
 set softtabstop=2
 set expandtab
-set sessionoptions=resize,winpos,winsize,buffers,tabpages,folds,curdir,help
-set t_Co=256
-set backspace=2 "
+" set sessionoptions=resize,winpos,winsize,buffers,tabpages,folds,curdir,help
+" set backspace=2 " have backspace work like normal. seems to be fine without rn
 " set colorcolumn=80
 let &colorcolumn=join(range(81,999),",")
 highlight ColorColumn ctermbg=235 guibg=#2c2d27
 let &colorcolumn="80,".join(range(120,999),",")
+set termguicolors " better colors, incl the colorcolumns
 set listchars=tab:▸\ ,eol:¬
-set clipboard=unnamed
-set laststatus=2
-"Better line wrapping
+" set clipboard=unnamed " point to system keyboard, seems to work without this for now
+set laststatus=2 " always display status bar
+" "Better line wrapping
 set wrap
 set textwidth=79
 set formatoptions=qrn1
@@ -149,18 +162,17 @@ set incsearch
 set hlsearch
 set ignorecase
 set smartcase
-"Show command in bottom right portion of the screen
+" "Show command in bottom right portion of the screen
 set showcmd
 set updatetime=250
-set termguicolors
-set shell=/usr/local/bin/fish
+set shell=/usr/local/bin/zsh
 
 " keybindings/maps
 nnoremap <space> :
 
-" nmap <leader>q ysiw'
+" " nmap <leader>q ysiw'
 " nmap <silent><leader>s :set spell!<CR>
-nmap <leader>l :set list!<CR>
+" nmap <leader>l :set list!<CR>
 nmap ; :Buffers<CR>
 
 " yank and delete line without newline
@@ -176,12 +188,12 @@ nnoremap <leader>z f,a<cr><esc>
 " Use Return key to clear search highlighting
 nmap <CR> :nohlsearch<CR>
 
-" Preserve indentation while pasting text from the OS X clipboard
-noremap <leader>p :set paste<CR>:put *<CR>:set nopaste<CR>
-
+" " Preserve indentation while pasting text from the OS X clipboard
+"noremap <C-p>:set paste<CR>:put *<CR>:set nopaste<CR>
 
 " fzf
 nmap <Leader>t :Files<CR>
+
 " dubious
 nnoremap dp :diffput<cr>
 autocmd BufReadPost quickfix nmap <buffer> <CR> <CR>
