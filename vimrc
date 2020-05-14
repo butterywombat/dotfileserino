@@ -1,70 +1,78 @@
 call plug#begin('~/.vim/plugged')
 Plug 'dstein64/vim-startuptime', {'on': 'StartupTime'}
+
 Plug '/usr/local/opt/fzf'
 Plug 'junegunn/fzf.vim', {'on': 'Files'}
-Plug 'mustache/vim-mustache-handlebars', {'for': 'handlebars'}
-Plug 'moll/vim-node'
+
 Plug 'alvan/vim-closetag'
+
 Plug 'dense-analysis/ale', {'on': 'ALEFix'}
 " unfortunately seems like prettier-stylelint (even prettier-stylelint-temp) not being maintained well, it's
 " not working for me. can investigate later. so need ale for at least css
 " Plug 'terryma/vim-multiple-cursors'
 Plug 'easymotion/vim-easymotion'
-" Plug 'Valloric/YouCompleteMe'
 " Plug ap/vim-css-color
 Plug 'bkad/CamelCaseMotion'
-Plug 'Raimondi/delimitMate'
+" Plug 'Raimondi/delimitMate'
+
+" graphical undo
 " Plug 'sjl/gundo.vim'
-" Plug 'majutsushi/tagbar' maybe
+
+" causes vim to hang
 Plug 'preservim/nerdcommenter'
 Plug 'preservim/nerdtree', {'on': ['NERDTreeToggle', 'NERDTreeFind']}
-
 Plug 'Xuyuanp/nerdtree-git-plugin'
+
+" Just as slow, when supposedly faster than netrw
+" Plug 'justinmk/vim-dirvish'
+" Plug 'kristijanhusak/vim-dirvish-git'
+
+
 " General crap
 Plug 'vim-airline/vim-airline'
 Plug 'airblade/vim-gitgutter'
-" Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' } " trying coc
 " Plug 'christoomey/vim-tmux-navigator'
 Plug 'knubie/vim-kitty-navigator'
-" Tpope
+
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-fugitive'
 " Plug 'tpope/vim-repeat'
 " Plug 'tpope/vim-unimpaired'
 " Plug 'Shougo/vimproc'
+
 " Snippets
 " Plug 'SirVer/ultisnips'
 " Plug 'honza/vim-snippets'
 Plug 'ntpeters/vim-better-whitespace' " highlight traling ws
-Plug 'metakirby5/codi.vim', {'on': 'Codi'}
+Plug 'metakirby5/codi.vim', {'on': 'Codi'} " replify
+
 " Colorschemes
 Plug 'morhetz/gruvbox'
-" Plug 'joshdick/onedark.vim'
-" JS Plugs
-"Plug 'marijnh/tern_for_vim'
-" Plug 'schickling/vim-bufonly'
-Plug 'pangloss/vim-javascript', {'for': 'javascript'}
-Plug  'mxw/vim-jsx'
 
+" Lang
+"Plug 'pangloss/vim-javascript', {'for': 'javascript'}
+Plug 'yuezk/vim-js', {'for': 'javascript'}
+Plug 'maxmellon/vim-jsx-pretty', {'for': 'javascript'}
+Plug 'mustache/vim-mustache-handlebars', {'for': 'handlebars'}
+" Plug 'sheerun/vim-polyglot'
+
+Plug 'heavenshell/vim-jsdoc', {'tag': '1.0.0'} " 2.0 doesn't support nvim
 Plug 'neoclide/coc.nvim', {'branch': 'release'} ", 'on': 'CocAction'}
 
-Plug 'heavenshell/vim-jsdoc', {'for': 'javascript'}
-
  " This has the limitation that you can't uninstall the extension by using :CocUninstall and that automatic update support is not available.
+ " Can't seem to bypass artifactory to install with CocInstall, this is the
+ " other option
 Plug 'neoclide/coc-tsserver', {'do': 'yarn install --frozen-lockfile'}
 Plug 'neoclide/coc-prettier', {'do': 'yarn install --frozen-lockfile'}
 Plug 'neoclide/coc-eslint', {'do': 'yarn install --frozen-lockfile'}
 Plug 'neoclide/coc-stylelint', {'do': 'yarn install --frozen-lockfile'}
-" Plug 'neoclide/coc-prettier', {'do': 'yarn install --frozen-lockfile'}
-Plug 'neoclide/coc-html', {'do': 'yarn install --frozen-lockfile'}
-Plug 'neoclide/coc-css', {'do': 'yarn install --frozen-lockfile'}
+Plug 'neoclide/coc-html', {'do': 'yarn install --frozen-lockfile'} " reconsider need
+Plug 'neoclide/coc-css', {'do': 'yarn install --frozen-lockfile'} " reconsider need
 Plug 'neoclide/coc-git', {'do': 'yarn install --frozen-lockfile'}
+" consider coc-explorer
 " Plug 'neoclide/coc-json', {'do': 'yarn install --frozen-lockfile'} " had vim
 " errors for this, maybe justneed to reinstall? yarn installed directly into
 " .coc/extensions
-
-Plug 'glidenote/newdayone.vim'
-
 
 call plug#end()
 
@@ -83,10 +91,9 @@ let g:gitgutter_eager = 0
 
 " not sure why this doesn't work - my js picks up conflicting lint errs
 " let g:ale_linter_aliases = {'frontend': ['javascript', 'scss']}
+" coc stylelint + prettier seem to be lacking, use ale for that
 let g:ale_linters = {'scss': ['prettier', 'stylelint'], 'javascript': ['prettier', 'eslint']}
 let g:ale_fixers = {'scss': ['prettier', 'stylelint'], 'javascript': ['prettier', 'eslint']}
-
-let g:deoplete#enable_at_startup = 1
 
 " SETTINGS
 set nocompatible
@@ -146,13 +153,13 @@ set smartcase
 set showcmd
 set updatetime=250
 set termguicolors
+set shell=/usr/local/bin/fish
 
 " keybindings/maps
-" inoremap jk <esc>
 nnoremap <space> :
-nmap <leader>q ysiw'
+
+" nmap <leader>q ysiw'
 " nmap <silent><leader>s :set spell!<CR>
-" nnoremap <leader>nt :NERDTreeToggle<cr>
 nmap <leader>l :set list!<CR>
 nmap ; :Buffers<CR>
 
@@ -163,46 +170,51 @@ noremap dl ^d$
 " go to end of line while in insert mode, stay in insert mode
 inoremap <C-e> <C-o>A
 
-nmap <Leader>t :Files<CR>
-nmap <Leader>r :Tags<CR>
 " find comma, append newline after comma
 nnoremap <leader>z f,a<cr><esc>
+
 " Use Return key to clear search highlighting
 nmap <CR> :nohlsearch<CR>
-autocmd BufReadPost quickfix nmap <buffer> <CR> <CR>
+
 " Preserve indentation while pasting text from the OS X clipboard
 noremap <leader>p :set paste<CR>:put *<CR>:set nopaste<CR>
-" nmap <F8> :TagbarToggle<CR>
-nnoremap dp :diffput<cr>
-"auto command stuff.
-autocmd BufNewFile * silent! 0r $VIMHOME/templates/%:e.tpl
-au BufNewFile,BufRead *.frag,*.vert,*.fp,*.vp,*.glsl setf glsl
-au FileType python setlocal tabstop=8 expandtab shiftwidth=4 softtabstop=4
-set shell=/usr/local/bin/fish
-let g:airline_powerline_fonts = 1
-let g:airline#extensions#tabline#enabled = 1
 
+
+" fzf
+nmap <Leader>t :Files<CR>
+" dubious
+nnoremap dp :diffput<cr>
+autocmd BufReadPost quickfix nmap <buffer> <CR> <CR>
+" autocmd BufNewFile * silent! 0r $VIMHOME/templates/%:e.tpl
+" au BufNewFile,BufRead *.frag,*.vert,*.fp,*.vp,*.glsl setf glsl
+" au FileType python setlocal tabstop=8 expandtab shiftwidth=4 softtabstop=4
+
+let NERDTreeShowHidden=1
+
+let g:airline_powerline_fonts = 1
+
+" display all buffers when only one tab open
+let g:airline#extensions#tabline#enabled = 1 
 
 " Dani's olde stuff
-" "!!!From my old vimrc
 " noremap ,gc :!git add . && git commit -am "
 " noremap ,gp :!git push<CR>
 " noremap ,gl :!git pull<CR>
 " noremap ,hp :!hub pull-request<CR>
 " noremap ; :
 " noremap : ;
-let NERDTreeShowHidden=1
+
 
 noremap ,n :NERDTreeToggle<CR>
 noremap <leader>nf :NERDTreeFind<cr>
 " let NERDTreeHighlightCursorline = 0 " may help with slowness, but it didn't seem to
 noremap <leader>al :ALEFix<cr>
-" "shouldn't need this but seems ; : above conflicting
+" shouldn't need this but seems ; : above conflicting
 
  let g:javascript_conceal_function   = "ƒ"
  let g:javascript_conceal_null       = "ø"
  let g:javascript_conceal_this       = "@"
-" 
+
 " ""!!!!!The following is from skwp/dotfiles/vimrc (yadr)
 " "" Use Vim settings, rather then Vi settings (much better!).
 " "" This must be first, because it changes other options as a side effect.
@@ -298,7 +310,13 @@ augroup Cursor
   au VimEnter,WinEnter,BufWinEnter * setlocal cursorcolumn
   au WinLeave * setlocal nocursorcolumn
 augroup END
-" 
+"
+
+" Source the vimrc file after saving it
+augroup sourcing
+  autocmd!
+  autocmd bufwritepost .vimrc source $MYVIMRC
+augroup END
 " "CtrlP
 " let g:ctrlp_custom_ignore= {'file': '\.pyc$\|\.pyo$\|\.rbc$|\.rbo$\|\.class$\|\.o$\|\~$\', 'dir': '\v[\/]\.(git|hg|svn)$'}
 " let g:ctrlp_max_files=0
@@ -423,8 +441,8 @@ command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organize
 " Add (Neo)Vim's native statusline support.
 " NOTE: Please see `:h coc-status` for integrations with external plugins that
 " provide custom statusline: lightline.vim, vim-airline.
-autocmd User CocGitStatusChange {command}
-let g:airline_section_y = "%{get(b:, 'coc_git_blame', 'yo')}"
+" autocmd User CocGitStatusChange {command}
+" let g:airline_section_y = \"%{get(b:, 'coc_git_blame', 'yo')}"
 
 " set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 
@@ -478,6 +496,22 @@ let g:rg_command = '
 
 " F seems a little different than Rg. can do F require('path') but Rg doesn't find. Rg <enter> then require('path') seems to work though.
 command! -bang -nargs=* F call fzf#vim#grep(g:rg_command .shellescape(<q-args>), 1, fzf#vim#with_preview(), <bang>0)
+
+"Get Files
+command! -bang -nargs=? -complete=dir Filez
+    \ call fzf#vim#files(<q-args>, fzf#vim#with_preview({'options': ['--layout=reverse', '--info=inline']}), <bang>0)
+
+" copied from fzf.vim
+" make fzf completely delegate its search responsibliity to ripgrep, may be faster
+function! RipgrepFzf(query, fullscreen)
+  let command_fmt = 'rg --column --line-number --no-heading --color=always --smart-case -- %s || true'
+  let initial_command = printf(command_fmt, shellescape(a:query))
+  let reload_command = printf(command_fmt, '{q}')
+  let spec = {'options': ['--phony', '--query', a:query, '--bind', 'change:reload:'.reload_command]}
+  call fzf#vim#grep(initial_command, 1, fzf#vim#with_preview(spec), a:fullscreen)
+endfunction
+
+command! -nargs=* -bang RG call RipgrepFzf(<q-args>, <bang>0)
 
 " vim-closetag
 "" filenames like *.xml, *.html, *.xhtml, ...

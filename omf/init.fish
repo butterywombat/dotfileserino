@@ -15,6 +15,7 @@ set -gx NVM_DIR (brew --prefix nvm)
 set -gx FZF_DEFAULT_COMMAND 'rg --files --no-ignore-vcs --hidden'
 set -gx FZF_CTRL_T_COMMAND 'rg --files --no-ignore-vcs --hidden'
 set -gx FZF_COMPLETION_TRIGGER '~~'
+set -gx BAT_THEME 'Nord'
 
 alias v='nvim'
 alias vim='nvim'

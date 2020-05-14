@@ -2,11 +2,12 @@ export PATH=$HOME/bin:/usr/local/bin:$HOME/.lc2/bin:$PATH
 export ZSH="/Users/xhu/.oh-my-zsh"
 # ZSH_THEME="agnoster"
 POWERLEVEL9K_MODE='nerdfont-complete'
-ZSH_THEME="powerlevel9k/powerlevel9k"
-COMPLETION_WAITING_DOTS="true"
+ZSH_THEME='powerlevel9k/powerlevel9k'
+COMPLETION_WAITING_DOTS='true'
 export EDITOR='nvim'
 export FZF_DEFAULT_COMMAND='rg --files --no-ignore-vcs --hidden'
 export FZF_CTRL_T_COMMAND='rg --files --no-ignore-vcs --hidden'
+export BAT_THEME='Nord'
 
 plugins=(git tmux nvm vi-mode z yarn command-not-found zsh-syntax-highlighting)
 
