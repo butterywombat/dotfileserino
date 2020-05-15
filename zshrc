@@ -7,6 +7,7 @@ COMPLETION_WAITING_DOTS='true'
 export EDITOR='nvim'
 export FZF_DEFAULT_COMMAND='rg --files --no-ignore-vcs --hidden'
 export FZF_CTRL_T_COMMAND='rg --files --no-ignore-vcs --hidden'
+export FZF_DEFAULT_OPTS="--reverse --inline-info"
 export BAT_THEME='Nord'
 
 plugins=(git tmux nvm vi-mode z yarn command-not-found zsh-syntax-highlighting)
@@ -18,7 +19,7 @@ source $ZSH/oh-my-zsh.sh
 # # [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm which one?
 [ -s "/usr/local/opt/nvm/etc/bash_completion.d/nvm" ] && . "/usr/local/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
 
-# aliases 
+# aliases
 alias godebug="export NODE_ENV='lcdev' node --inspect ./ | bunyan"
 alias godemo="NODE_ENV=demo LOCAL_AUTH=true yarn start"
 alias godemob="NODE_ENV=demo LOCAL_AUTH=true ndb yarn start"
@@ -38,7 +39,6 @@ alias kit="v ~/.config/kitty/kitty.conf"
 
 alias t='tmux'
 alias hok='z ui && wa'
-alias dayone='dayone2'
 
 [ -f ~/.lc.zsh ] && . ~/.lc.zsh
 

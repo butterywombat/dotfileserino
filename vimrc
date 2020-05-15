@@ -1,62 +1,86 @@
+" Bootstrap
+  if empty(glob('~/.vim/autoload/plug.vim'))
+    silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+      \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+  endif
 call plug#begin('~/.vim/plugged')
+
 Plug 'dstein64/vim-startuptime', {'on': 'StartupTime'}
 
 Plug '/usr/local/opt/fzf'
-Plug 'junegunn/fzf.vim', {'on': 'Files'}
+Plug 'junegunn/fzf.vim' " , {'on': 'Files'}
 
-Plug 'alvan/vim-closetag'
-
-Plug 'dense-analysis/ale', {'on': 'ALEFix'}
-" unfortunately seems like prettier-stylelint (even prettier-stylelint-temp) not being maintained well, it's
-" not working for me. can investigate later. so need ale for at least css
-" Plug 'terryma/vim-multiple-cursors'
-Plug 'easymotion/vim-easymotion'
-" Plug ap/vim-css-color
-Plug 'bkad/CamelCaseMotion'
-" Plug 'Raimondi/delimitMate'
-
-" graphical undo
-" Plug 'sjl/gundo.vim'
-
-" causes vim to hang
+"Navigation
 Plug 'preservim/nerdcommenter'
 Plug 'preservim/nerdtree', {'on': ['NERDTreeToggle', 'NERDTreeFind']}
 Plug 'Xuyuanp/nerdtree-git-plugin'
 
-" Just as slow, when supposedly faster than netrw
-" Plug 'justinmk/vim-dirvish'
-" Plug 'kristijanhusak/vim-dirvish-git'
+Plug 'justinmk/vim-dirvish'
+Plug 'kristijanhusak/vim-dirvish-git'
 
-
-" General crap
-Plug 'vim-airline/vim-airline'
-Plug 'airblade/vim-gitgutter'
 " Plug 'christoomey/vim-tmux-navigator'
 Plug 'knubie/vim-kitty-navigator'
 
-Plug 'tpope/vim-surround'
+" General crap
+Plug 'vim-airline/vim-airline'
+" TODO switch to lightline, less bloat
+Plug 'airblade/vim-gitgutter'
+
 Plug 'tpope/vim-fugitive'
 " Plug 'tpope/vim-repeat'
 " Plug 'tpope/vim-unimpaired'
-" Plug 'Shougo/vimproc'
+
+" Plug 'terryma/vim-multiple-cursors'
+
+Plug 'easymotion/vim-easymotion'
+Plug 'bkad/CamelCaseMotion'
+
+" graphical undo tree
+" Plug 'sjl/gundo.vim'
 
 " Snippets
 " Plug 'SirVer/ultisnips'
 " Plug 'honza/vim-snippets'
-Plug 'ntpeters/vim-better-whitespace' " highlight traling ws
+
 Plug 'metakirby5/codi.vim', {'on': 'Codi'} " replify
 
 " Colorschemes
 Plug 'morhetz/gruvbox'
+Plug 'arcticicestudio/nord-vim'
+Plug 'cocopon/iceberg.vim'
+Plug 'liuchengxu/space-vim-dark'
+Plug 'yuttie/hydrangea-vim'
+Plug 'AlessandroYorba/Alduin'
+Plug 'w0ng/vim-hybrid'
+Plug 'nightsense/snow'
+Plug 'nightsense/stellarized'
 
-" Lang
+Plug 'nightsense/cosmic_latte'
+" hi LineNr ctermbg=NONE guibg=NONE
+
+Plug 'alvan/vim-closetag' " TODO re-eval workings
+Plug 'jiangmiao/auto-pairs' " replace Plug 'Raimondi/delimitMate'
+Plug 'tpope/vim-surround'
+Plug 'ntpeters/vim-better-whitespace' " highlight traling ws 
+" TODO seems to not be working until I change colorscheme again
+
+" Lang specific
+" Plug ap/vim-css-color
 "Plug 'pangloss/vim-javascript', {'for': 'javascript'}
-Plug 'yuezk/vim-js', {'for': 'javascript'}
+Plug 'yuezk/vim-js', {'for': 'javascript'} " compare w pangloss
+
 Plug 'maxmellon/vim-jsx-pretty', {'for': 'javascript'}
 Plug 'mustache/vim-mustache-handlebars', {'for': 'handlebars'}
 " Plug 'sheerun/vim-polyglot'
 
 Plug 'heavenshell/vim-jsdoc', {'tag': '1.0.0'} " 2.0 doesn't support nvim
+
+" LSP and lintings
+Plug 'dense-analysis/ale', {'on': 'ALEFix'}
+" unfortunately seems like prettier-stylelint (even prettier-stylelint-temp) not being maintained well, it's
+" not working for me. can investigate later. so need ale for at least css
+
 Plug 'neoclide/coc.nvim', {'branch': 'release'} ", 'on': 'CocAction'}
 
  " This has the limitation that you can't uninstall the extension by using :CocUninstall and that automatic update support is not available.
@@ -69,47 +93,30 @@ Plug 'neoclide/coc-stylelint', {'do': 'yarn install --frozen-lockfile'}
 Plug 'neoclide/coc-html', {'do': 'yarn install --frozen-lockfile'} " reconsider need
 Plug 'neoclide/coc-css', {'do': 'yarn install --frozen-lockfile'} " reconsider need
 Plug 'neoclide/coc-git', {'do': 'yarn install --frozen-lockfile'}
-" consider coc-explorer
+Plug 'weirongxu/coc-explorer', {'do': 'yarn install --frozen-lockfile'}
 " Plug 'neoclide/coc-json', {'do': 'yarn install --frozen-lockfile'} " had vim
-" errors for this, maybe justneed to reinstall? yarn installed directly into
-" .coc/extensions
+" errors for this, maybe just need to reinstall? i yarn installed directly into .coc/extensions
+
+" Playing with
+" -----------------------------------------------------------------
+" Plug 'tiagofumo/vim-nerdtree-syntax-highlight' " slow AF, also broken for
+Plug 'ryanoasis/vim-devicons'
+Plug 'Yggdroot/indentLine', {'on': 'IndentLinesToggle'}
+Plug 'liuchengxu/vista.vim'
+
+Plug 'junegunn/vim-peekaboo'
+Plug 'luochen1990/rainbow' " needs config, broken
+
+" TODO try which-key
+" add a way to edit this file quickly
+" consider coc-actions which has floating windows ranger/ranger.vim/floaty ranger thing, coc-explorer, defx, vista, hydrangea, auto-pairs or delimitMate, floaterm
+" TODO try just using netrw? w some settings from https://www.youtube.com/watch?v=nDGhjk4Eqbc&list=LLz2frLr13jJWUBJJyD8im3w
+
 
 call plug#end()
 
 let mapleader=","
-
-let NERDTreeShowHidden=1
-noremap ,n :NERDTreeToggle<CR>
-noremap <leader>nf :NERDTreeFind<cr>
-" let NERDTreeHighlightCursorline = 0 " may help with slowness, but it didn't seem to
-noremap <leader>al :ALEFix<cr>
-" shouldn't need this but seems ; : above conflicting
-
-let g:airline_powerline_fonts = 1
-
-" display all buffers when only one tab open
-let g:airline#extensions#tabline#enabled = 1
-
-call camelcasemotion#CreateMotionMappings('<leader>')
-" Plugin settings
-let delimitMate_expand_cr = 1
-let delimitMate_expand_space = 1
-let g:signify_sign_overwrite = 0
-" let g:UltiSnipsExpandTrigger="<c-j>"
-" let g:UltiSnipsJumpForwardTrigger="<c-j>"
-" let g:UltiSnipsJumpBackwardTrigger="<c-k>"
-"let g:tern_map_keys=1
-let g:gitgutter_realtime = 0
-let g:gitgutter_eager = 0
-
-" not sure why this doesn't work - my js picks up conflicting lint errs
-" let g:ale_linter_aliases = {'frontend': ['javascript', 'scss']}
-" coc stylelint + prettier seem to be lacking, use ale for that
-let g:ale_linters = {'scss': ['prettier', 'stylelint'], 'javascript': ['prettier', 'eslint']}
-let g:ale_fixers = {'scss': ['prettier', 'stylelint'], 'javascript': ['prettier', 'eslint']}
-
-" SETTINGS
-set nocompatible
+" set nocompatible " default for nvim
 filetype on
 filetype plugin on
 filetype indent on
@@ -152,7 +159,7 @@ let &colorcolumn="80,".join(range(120,999),",")
 set termguicolors " better colors, incl the colorcolumns
 set listchars=tab:▸\ ,eol:¬
 " set clipboard=unnamed " point to system keyboard, seems to work without this for now
-set laststatus=2 " always display status bar
+set laststatus=2 " always display status bar. TODO reeval
 " "Better line wrapping
 set wrap
 set textwidth=79
@@ -194,19 +201,13 @@ nmap <CR> :nohlsearch<CR>
 " fzf
 nmap <Leader>t :Files<CR>
 
+" TODO continue pruning from here
 " dubious
 nnoremap dp :diffput<cr>
 autocmd BufReadPost quickfix nmap <buffer> <CR> <CR>
 " autocmd BufNewFile * silent! 0r $VIMHOME/templates/%:e.tpl
 " au BufNewFile,BufRead *.frag,*.vert,*.fp,*.vp,*.glsl setf glsl
 " au FileType python setlocal tabstop=8 expandtab shiftwidth=4 softtabstop=4
-
-let NERDTreeShowHidden=1
-
-let g:airline_powerline_fonts = 1
-
-" display all buffers when only one tab open
-let g:airline#extensions#tabline#enabled = 1 
 
 " Dani's olde stuff
 " noremap ,gc :!git add . && git commit -am "
@@ -216,16 +217,56 @@ let g:airline#extensions#tabline#enabled = 1
 " noremap ; :
 " noremap : ;
 
-
-noremap ,n :NERDTreeToggle<CR>
+let NERDTreeShowHidden=1
+noremap <leader>n :NERDTreeToggle<CR>
 noremap <leader>nf :NERDTreeFind<cr>
 " let NERDTreeHighlightCursorline = 0 " may help with slowness, but it didn't seem to
 noremap <leader>al :ALEFix<cr>
 " shouldn't need this but seems ; : above conflicting
 
- let g:javascript_conceal_function   = "ƒ"
- let g:javascript_conceal_null       = "ø"
- let g:javascript_conceal_this       = "@"
+let g:airline_powerline_fonts = 1
+
+" display all buffers when only one tab open
+let g:airline#extensions#tabline#enabled = 1
+
+call camelcasemotion#CreateMotionMappings('<leader>')
+" Plugin settings
+" let delimitMate_expand_cr = 1
+" let delimitMate_expand_space = 1
+" let g:UltiSnipsExpandTrigger="<c-j>"
+" let g:UltiSnipsJumpForwardTrigger="<c-j>"
+" let g:UltiSnipsJumpBackwardTrigger="<c-k>"
+let g:gitgutter_realtime = 0
+let g:gitgutter_eager = 0
+
+" not sure why this doesn't work - my js picks up conflicting lint errs
+" let g:ale_linter_aliases = {'frontend': ['javascript', 'scss']}
+" coc stylelint + prettier seem to be lacking, use ale for that
+let g:ale_linters = {'scss': ['prettier', 'stylelint'], 'javascript': ['prettier', 'eslint']}
+let g:ale_fixers = {'scss': ['prettier', 'stylelint'], 'javascript': ['prettier', 'eslint']}
+
+let g:jsdoc_allow_input_prompt = 1
+let g:jsdoc_enable_es6 = 1
+let g:jsdoc_underscore_private = 1
+
+let NERDTreeShowHidden = 1
+let g:NERDSpaceDelims = 1
+
+let g:airline_powerline_fonts = 1
+
+" display all buffers when only one tab open
+let g:airline#extensions#tabline#enabled = 1
+
+" pangloss js
+" let g:javascript_conceal_function   = "ƒ"
+" let g:javascript_conceal_null       = "ø"
+" let g:javascript_conceal_this       = "@"
+
+" noremap ,n :NERDTreeToggle<CR>
+" noremap <leader>nf :NERDTreeFind<cr>
+" let NERDTreeHighlightCursorline = 0 " may help with slowness, but it didn't seem to
+noremap <leader>al :ALEFix<cr>
+" shouldn't need this but seems ; : above conflicting
 
 " ""!!!!!The following is from skwp/dotfiles/vimrc (yadr)
 " "" Use Vim settings, rather then Vi settings (much better!).
@@ -329,31 +370,19 @@ augroup sourcing
   autocmd!
   autocmd bufwritepost .vimrc source $MYVIMRC
 augroup END
-" "CtrlP
-" let g:ctrlp_custom_ignore= {'file': '\.pyc$\|\.pyo$\|\.rbc$|\.rbo$\|\.class$\|\.o$\|\~$\', 'dir': '\v[\/]\.(git|hg|svn)$'}
-" let g:ctrlp_max_files=0
-" let g:ctrlp_max_depth=40
-" let g:ctrlp_user_command = 'ag %s -l --nocolor -g ./'
-" set wildignore+=*/tmp/*,*.so,*.swp,*.zip
 
 " " Syntax off for large files
 " "autocmd BufReadPre * if getfsize(expand("%")) > 1000000 | syntax off | endif
-
-" "set statusline+=%#warningmsg#
-" "set statusline+=%{SyntasticStatuslineFlag()}
-" "set statusline+=%*
-
 nmap s <Plug>(easymotion-s)
 xmap s <Plug>(easymotion-s)
 
 " Add spaces after comment delimiters by default
-let g:NERDSpaceDelims = 1
 command! FormatJSON %!python -m json.tool
 " autocmd BufNewFile,BufRead *.json set ft=javascript
 "
 "Coc stuff
 let g:coc_node_path = '/Users/xhu/.nvm/versions/node/v13.13.0/bin/node' "use more updated node
-command! -nargs=0 Prettier :CocCommand prettier.formatFile
+" command! -nargs=0 Prettier :CocCommand prettier.formatFile
 
 " Don't pass messages to |ins-completion-menu|.
 set shortmess+=c
@@ -455,7 +484,6 @@ command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organize
 " provide custom statusline: lightline.vim, vim-airline.
 " autocmd User CocGitStatusChange {command}
 " let g:airline_section_y = \"%{get(b:, 'coc_git_blame', 'yo')}"
-
 " set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 
 " Mappings using CoCList:
@@ -491,15 +519,12 @@ xmap ag <Plug>(coc-git-chunk-outer)
 
 " end coc stuff
 "
-let g:jsdoc_allow_input_prompt = 1
-let g:jsdoc_enable_es6 = 1
-let g:jsdoc_underscore_private = 1
-
 " json c (with comments for cocconfig)
 " autocmd FileType json syntax match Comment +\/\/.\+$+
 
 " \ -g "*.{js,json,php,md,styl,jade,html,config,py,cpp,c,go,hs,rb,conf}"
 " \ -g "!*.{min.js,swp,o,zip}"
+
 let g:rg_command = '
   \ rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --follow --hidden --vimgrep --color "always"
   \ -g "!{.git,node_modules,vendor}/*" '
@@ -510,7 +535,7 @@ let g:rg_command = '
 command! -bang -nargs=* F call fzf#vim#grep(g:rg_command .shellescape(<q-args>), 1, fzf#vim#with_preview(), <bang>0)
 
 "Get Files
-command! -bang -nargs=? -complete=dir Filez
+command! -bang -nargs=? -complete=dir Files
     \ call fzf#vim#files(<q-args>, fzf#vim#with_preview({'options': ['--layout=reverse', '--info=inline']}), <bang>0)
 
 " copied from fzf.vim
@@ -525,6 +550,7 @@ endfunction
 
 command! -nargs=* -bang RG call RipgrepFzf(<q-args>, <bang>0)
 
+" TODO stopped working
 " vim-closetag
 "" filenames like *.xml, *.html, *.xhtml, ...
 " These are the file extensions where this plugin is enabled.
@@ -562,8 +588,38 @@ let g:closetag_regions = {
 " Shortcut for closing tags, default is '>'
 "
 let g:closetag_shortcut = '>'
-
 " Add > at current position without closing the current tag, default is ''
 "
 let g:closetag_close_shortcut = '<leader>>'
 " end vim-closetags
+
+" -------------------------------------- Playing
+
+let g:WebDevIconsNerdTreeGitPluginForceVAlign = 1
+
+let g:vista_default_executive = 'coc'
+
+function! NearestMethodOrFunction() abort
+  return get(b:, 'vista_nearest_method_or_function', '')
+endfunction
+let g:airline_section_y = "%{NearestMethodOrFunction()}"
+
+" By default vista.vim never runs if you don't call it explicitly.
+" show the nearest function in your statusline automatically
+autocmd VimEnter * call vista#RunForNearestMethodOrFunction()
+
+let g:peekaboo_compact = 1
+noremap <leader>i :IndentLinesToggle<cr>
+
+
+" attempt to replace nerdtree with netrw, needs work
+" map <silent><Leader>nf :let @/=expand("%:t") <Bar> execute 'Lex' expand("%:h") <Bar> normal n<CR>
+" map <Leader>n :Lex<CR>
+
+" broken
+" let g:NERDTreeLimitedSyntax = 1 " remove some lag
+" augroup nerdtree
+"     autocmd!
+"     autocmd FileType nerdtree syntax clear NERDTreeFlags
+"     " other nerdtree related aucomds
+" augroup END

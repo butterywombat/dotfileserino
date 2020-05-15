@@ -10,10 +10,13 @@ set -U EDITOR nvim
 set -g theme_nerd_fonts yes
 set -g theme_color_scheme gruvbox
 
-set -gx NVM_DIR (brew --prefix nvm)
+if status is-interactive # or is-login if you prefer
+    set -gx NVM_DIR (brew --prefix nvm)
+end
 
 set -gx FZF_DEFAULT_COMMAND 'rg --files --no-ignore-vcs --hidden'
 set -gx FZF_CTRL_T_COMMAND 'rg --files --no-ignore-vcs --hidden'
+set -gx FZF_DEFAULT_OPTS '--reverse --inline-info'
 set -gx FZF_COMPLETION_TRIGGER '~~'
 set -gx BAT_THEME 'Nord'
 
@@ -23,7 +26,6 @@ alias vimdiff='nvim -d'
 alias l='ls -la'
 
 alias t='tmux' #alias hok='z ui && wa'
-alias dayone='dayone2'
 
 alias godebug="export NODE_ENV='lcdev' node --inspect ./ | bunyan"
 alias godemo="NODE_ENV=demo LOCAL_AUTH=true yarn start"
