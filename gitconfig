@@ -1,9 +1,11 @@
 [user]
 	name = Xue Hu
-	email = xhu@lendingclub.com
+	email = dxuehu@gmail.com
+[includeIf "gitdir:~/code/lc"]
+  path = .gitconfig-work
 [core]
-	editor = vim
-	excludesfile = /Users/xuehu/.gitignore_global
+	editor = nvim
+	excludesfile = ~/.gitignore_global
 [credential]
 	helper = osxkeychain
 [push]
