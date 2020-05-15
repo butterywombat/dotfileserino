@@ -1,14 +1,16 @@
 [user]
-	name = Xue Hu
-	email = dxuehu@gmail.com
-[includeIf "gitdir:~/code/lc"]
-  path = .gitconfig-work
+  name = Xue Hu
+  email = dxuehu@gmail.com
+[includeIf "gitdir:~/code/lc/*"]
+  path = ~/.gitconfig-work
 [core]
-	editor = nvim
-	excludesfile = ~/.gitignore_global
+  editor = nvim
+  excludesfile = ~/.gitignore_global
 [credential]
-	helper = osxkeychain
+  helper = osxkeychain
 [push]
-	default = matching
+  default = current
 [alias]
-	co = checkout
+  co = checkout
+[branch]
+  autosetuprebase = always
