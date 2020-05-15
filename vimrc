@@ -1,3 +1,4 @@
+filetype off
 " Bootstrap
   if empty(glob('~/.vim/autoload/plug.vim'))
     silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
@@ -11,11 +12,9 @@ Plug 'dstein64/vim-startuptime', {'on': 'StartupTime'}
 Plug '/usr/local/opt/fzf'
 Plug 'junegunn/fzf.vim' " , {'on': 'Files'}
 
-"Navigation
-Plug 'preservim/nerdcommenter'
+" Navigation
 Plug 'preservim/nerdtree', {'on': ['NERDTreeToggle', 'NERDTreeFind']}
 Plug 'Xuyuanp/nerdtree-git-plugin'
-
 Plug 'justinmk/vim-dirvish'
 Plug 'kristijanhusak/vim-dirvish-git'
 
@@ -23,25 +22,14 @@ Plug 'kristijanhusak/vim-dirvish-git'
 Plug 'knubie/vim-kitty-navigator'
 
 " General crap
-Plug 'vim-airline/vim-airline'
-" TODO switch to lightline, less bloat
+Plug 'preservim/nerdcommenter'
+Plug 'vim-airline/vim-airline' " TODO switch to lightline, less bloat
 Plug 'airblade/vim-gitgutter'
-
 Plug 'tpope/vim-fugitive'
-" Plug 'tpope/vim-repeat'
-" Plug 'tpope/vim-unimpaired'
-
-" Plug 'terryma/vim-multiple-cursors'
-
+Plug 'ryanoasis/vim-devicons'
+Plug 'Yggdroot/indentLine', {'on': 'IndentLinesToggle'}
 Plug 'easymotion/vim-easymotion'
 Plug 'bkad/CamelCaseMotion'
-
-" graphical undo tree
-" Plug 'sjl/gundo.vim'
-
-" Snippets
-" Plug 'SirVer/ultisnips'
-" Plug 'honza/vim-snippets'
 
 Plug 'metakirby5/codi.vim', {'on': 'Codi'} " replify
 
@@ -55,9 +43,7 @@ Plug 'AlessandroYorba/Alduin'
 Plug 'w0ng/vim-hybrid'
 Plug 'nightsense/snow'
 Plug 'nightsense/stellarized'
-
-Plug 'nightsense/cosmic_latte'
-" hi LineNr ctermbg=NONE guibg=NONE
+Plug 'nightsense/cosmic_latte' " hi LineNr ctermbg=NONE guibg=NONE
 
 Plug 'alvan/vim-closetag' " TODO re-eval workings
 Plug 'jiangmiao/auto-pairs' " replace Plug 'Raimondi/delimitMate'
@@ -81,10 +67,11 @@ Plug 'dense-analysis/ale', {'on': 'ALEFix'}
 " not working for me. can investigate later. so need ale for at least css
 
 Plug 'neoclide/coc.nvim', {'branch': 'release'} ", 'on': 'CocAction'}
+Plug 'liuchengxu/vista.vim'
 
- " This has the limitation that you can't uninstall the extension by using :CocUninstall and that automatic update support is not available.
- " Can't seem to bypass artifactory to install with CocInstall, this is the
- " other option
+" This has the limitation that you can't uninstall the extension by using :CocUninstall and that automatic update support is not available.
+" Can't seem to bypass artifactory to install with CocInstall, this is the
+" other option
 Plug 'neoclide/coc-tsserver', {'do': 'yarn install --frozen-lockfile'}
 Plug 'neoclide/coc-prettier', {'do': 'yarn install --frozen-lockfile'}
 Plug 'neoclide/coc-eslint', {'do': 'yarn install --frozen-lockfile'}
@@ -96,90 +83,82 @@ Plug 'weirongxu/coc-explorer', {'do': 'yarn install --frozen-lockfile'}
 " Plug 'neoclide/coc-json', {'do': 'yarn install --frozen-lockfile'} " had vim
 " errors for this, maybe just need to reinstall? i yarn installed directly into .coc/extensions
 
-" Playing with
-" -----------------------------------------------------------------
-" Plug 'tiagofumo/vim-nerdtree-syntax-highlight' " slow AF, also broken for
-" nvim
-Plug 'ryanoasis/vim-devicons'
-Plug 'Yggdroot/indentLine', {'on': 'IndentLinesToggle'}
-Plug 'liuchengxu/vista.vim'
+" Graphical undo tree
+" Plug 'sjl/gundo.vim'
 
+" Snippets. I never use snippets.
+" Plug 'SirVer/ultisnips'
+" Plug 'honza/vim-snippets'
+
+" Extra extraness
+" Plug 'tpope/vim-repeat'
+" Plug 'tpope/vim-unimpaired'
+" Plug 'terryma/vim-multiple-cursors'
+
+" Playing with ----------------------------------------------------------------
+" Plug 'tiagofumo/vim-nerdtree-syntax-highlight' " broken for nvim
 Plug 'junegunn/vim-peekaboo'
-Plug 'luochen1990/rainbow' " needs config, broken
+" Plug 'luochen1990/rainbow' " needs config, broken. retry when attempting clojure
 
-" add a way to edit this file quickly
-" consider which-key, coc-actions which has floating windows ranger/ranger.vim/floaty ranger thing, coc-explorer, defx, floaterm
-" TODO try just using netrw? w some settings from https://www.youtube.com/watch?v=nDGhjk4Eqbc&list=LLz2frLr13jJWUBJJyD8im3w
-
+" TODO
+" - add a way to edit this file quickly
+" - consider which-key, coc-actions which has floating windows ranger/ranger.vim/floaty ranger thing, coc-explorer, defx, floaterm
+" - try just using netrw? w some settings from https://www.youtube.com/watch?v=nDGhjk4Eqbc&list=LLz2frLr13jJWUBJJyD8im3w
 
 call plug#end()
 
 let mapleader=","
 " set nocompatible " default for nvim
-filetype on
-filetype plugin on
-filetype indent on
+filetype plugin indent on
 syntax on
 colorscheme gruvbox
+set termguicolors " better colors, incl the colorcolumns
 set background=dark
 set encoding=utf-8
 set fileencoding=utf-8
 set comments=sr:/**,m:*\ ,ex:*/,://
 set number
 set relativenumber
-"folding
-set foldenable
+set foldenable " 3 folding
 set foldmethod=indent
 set foldlevelstart=99
-"Spell Checking
 set spelllang=en_us
 set splitbelow
-"Write the old file out when switching between files.
 " set autowrite
 set autoread
-"Display current cursor position in lower right corner.
-set ruler
+set ruler " display current cursor position in lower right corner.
 set timeoutlen=500
 set hidden
-"Indent stuff
 set smartindent
 set autoindent
-"Tab stuff
-set tabstop=2
+set tabstop=2 " 4 tab stuff
 set shiftwidth=2
 set softtabstop=2
 set expandtab
 " set sessionoptions=resize,winpos,winsize,buffers,tabpages,folds,curdir,help
 " set backspace=2 " have backspace work like normal. seems to be fine without rn
 " set colorcolumn=80
+
 let &colorcolumn=join(range(81,999),",")
 highlight ColorColumn ctermbg=235 guibg=#2c2d27
 let &colorcolumn="80,".join(range(120,999),",")
-set termguicolors " better colors, incl the colorcolumns
 set listchars=tab:▸\ ,eol:¬
 " set clipboard=unnamed " point to system keyboard, seems to work without this for now
 set laststatus=2 " always display status bar. TODO reeval
-" "Better line wrapping
-set wrap
+set wrap " better line wrapping
 set textwidth=79
 set formatoptions=qrn1
-"search stuff
-set incsearch
+set incsearch " search stuff
 set hlsearch
 set ignorecase
 set smartcase
-" "Show command in bottom right portion of the screen
-set showcmd
+
+set showcmd " show command in bottom right portion of the screen
 set updatetime=250
 set shell=/usr/local/bin/zsh
 
 " keybindings/maps
 nnoremap <space> :
-
-" " nmap <leader>q ysiw'
-" nmap <silent><leader>s :set spell!<CR>
-" nmap <leader>l :set list!<CR>
-nmap ; :Buffers<CR>
 
 " yank and delete line without newline
 noremap yl ^y$
@@ -195,12 +174,25 @@ nnoremap <leader>z f,a<cr><esc>
 nmap <CR> :nohlsearch<CR>
 
 " " Preserve indentation while pasting text from the OS X clipboard
-"noremap <C-p>:set paste<CR>:put *<CR>:set nopaste<CR>
+" noremap <C-p>:set paste<CR>:put *<CR>:set nopaste<CR>
 
 " fzf
 nmap <Leader>t :Files<CR>
+nmap ; :Buffers<CR>
 
-" TODO continue pruning from here
+noremap <leader>i :IndentLinesToggle<cr>
+
+noremap <leader>n :NERDTreeToggle<CR>
+noremap <leader>nf :NERDTreeFind<cr>
+" let NERDTreeHighlightCursorline = 0 " may help with slowness, but it didn't seem to
+
+noremap <leader>al :ALEFix<cr>
+
+" nmap <leader>q ysiw'
+" nmap <silent><leader>s :set spell!<CR>
+" nmap <leader>l :set list!<CR>
+
+" TODO prune from here
 " dubious
 nnoremap dp :diffput<cr>
 autocmd BufReadPost quickfix nmap <buffer> <CR> <CR>
@@ -208,28 +200,19 @@ autocmd BufReadPost quickfix nmap <buffer> <CR> <CR>
 " au BufNewFile,BufRead *.frag,*.vert,*.fp,*.vp,*.glsl setf glsl
 " au FileType python setlocal tabstop=8 expandtab shiftwidth=4 softtabstop=4
 
-" Dani's olde stuff
-" noremap ,gc :!git add . && git commit -am "
-" noremap ,gp :!git push<CR>
-" noremap ,gl :!git pull<CR>
-" noremap ,hp :!hub pull-request<CR>
+" old
 " noremap ; :
 " noremap : ;
 
+" Plugin settings
 let NERDTreeShowHidden=1
-noremap <leader>n :NERDTreeToggle<CR>
-noremap <leader>nf :NERDTreeFind<cr>
-" let NERDTreeHighlightCursorline = 0 " may help with slowness, but it didn't seem to
-noremap <leader>al :ALEFix<cr>
-" shouldn't need this but seems ; : above conflicting
-
 let g:airline_powerline_fonts = 1
 
 " display all buffers when only one tab open
 let g:airline#extensions#tabline#enabled = 1
 
 call camelcasemotion#CreateMotionMappings('<leader>')
-" Plugin settings
+
 " let delimitMate_expand_cr = 1
 " let delimitMate_expand_space = 1
 " let g:UltiSnipsExpandTrigger="<c-j>"
@@ -248,113 +231,61 @@ let g:jsdoc_allow_input_prompt = 1
 let g:jsdoc_enable_es6 = 1
 let g:jsdoc_underscore_private = 1
 
-let NERDTreeShowHidden = 1
 let g:NERDSpaceDelims = 1
 
-let g:airline_powerline_fonts = 1
-
-" display all buffers when only one tab open
-let g:airline#extensions#tabline#enabled = 1
+let g:peekaboo_compact = 1
 
 " pangloss js
 " let g:javascript_conceal_function   = "ƒ"
 " let g:javascript_conceal_null       = "ø"
 " let g:javascript_conceal_this       = "@"
 
-" noremap ,n :NERDTreeToggle<CR>
-" noremap <leader>nf :NERDTreeFind<cr>
-" let NERDTreeHighlightCursorline = 0 " may help with slowness, but it didn't seem to
-noremap <leader>al :ALEFix<cr>
-" shouldn't need this but seems ; : above conflicting
-
 " ""!!!!!The following is from skwp/dotfiles/vimrc (yadr)
-" "" Use Vim settings, rather then Vi settings (much better!).
-" "" This must be first, because it changes other options as a side effect.
-" "
-" "" ================ General Config ====================
-" "
-" "set backspace=indent,eol,start  "Allow backspace in insert mode
 " "set history=1000                "Store lots of :cmdline history
-" "set showcmd                     "Show incomplete cmds down the bottom
-" set autoread                    "Reload files changed outside vim
-" "
-" "" This makes vim act like all other editors, buffers can
-" "" exist in the background without being in a window.
-" "" http://items.sjbach.com/319/configuring-vim-right
-" "set hidden
-" "
-" "" ================ Turn Off Swap Files ==============
-" "
- set noswapfile
-" "set nobackup
+
+set noswapfile
+"set nobackup
 set backupdir=~/.vim/backups/backups
 set nowb
-" "
-" "" ================ Persistent Undo ==================
-" "" Keep undo history across sessions, by storing in file.
-" "" Only works all the time.
-" "
+
+" Persistent undo - keep undo history across sessions, by storing in file.
 silent !mkdir ~/.vim/backups > /dev/null 2>&1
 set undodir=~/.vim/backups
 set undofile
-" "
-" "" Display tabs and trailing spaces visually
-" "set list listchars=tab:\ \ ,trail:·
-" "
-" "set nowrap       "Don't wrap lines
-" "set linebreak    "Wrap lines at convenient points
-" "
-" "" ================ Folds ============================
-" "
-" "set foldmethod=indent   "fold based on indent
-" "set foldnestmax=3       "deepest fold is 3 levels
-" "set nofoldenable        "dont fold by default
-" "
-" "" ================ Completion =======================
-" "
-" "set wildmode=list:longest
-" "set wildmenu                "enable ctrl-n and ctrl-p to scroll thru matches
-" "set wildignore=*.o,*.obj,*~ "stuff to ignore when tab completing
-" "set wildignore+=*vim/backups*
-" "set wildignore+=*sass-cache*
-" "set wildignore+=*DS_Store*
-" "set wildignore+=vendor/rails/**
-" "set wildignore+=vendor/cache/**
-" "set wildignore+=*.gem
-" "set wildignore+=log/**
-" "set wildignore+=tmp/**
-" "set wildignore+=*.png,*.jpg,*.gif
-" "
-" "" ================ Scrolling ========================
-" "
-" "set scrolloff=8         "Start scrolling when we're 8 lines away from margins
-" "set sidescrolloff=15
-" "set sidescroll=1
-" 
-" " Windows *********************************************************************
-" set equalalways " Multiple windows, when created, are equal in size
+
+"set linebreak " Wrap lines at convenient points
+
+" ================ Completion =======================
+" set wildmode=list:longest
+" set wildmenu                "enable ctrl-n and ctrl-p to scroll thru matches
+" set wildignore=*.o,*.obj,*~ "stuff to ignore when tab completing
+" set wildignore+=*vim/backups*
+" set wildignore+=*sass-cache*
+" set wildignore+=*DS_Store*
+" set wildignore+=vendor/rails/**
+" set wildignore+=vendor/cache/**
+" set wildignore+=*.gem
+" set wildignore+=log/**
+" set wildignore+=tmp/**
+" set wildignore+=*.png,*.jpg,*.gif
+"
+" ================ Scrolling ========================
+" set scrolloff=8 " start scrolling when we're 8 lines away from margins
+" set sidescrolloff=15
+" set sidescroll=1
+
 " set splitbelow splitright
-" 
-" :nnoremap <silent> <Space> :nohlsearch<Bar>:echo<CR>
-" 
-" " Status Line *****************************************************************
-" set ruler " Show ruler
-" set ch=1 " Make command line two lines high
-" 
-" 
-" " Insert New Line **************************************************************
-" set ch=1 " Make command one line high
-" 
-" " Mapping ********************************************************************
+
+" set ch=1 " make command one line high
+
 " noremap <leader>w :up<cr>
-" 
-" " Speedy.vim ********************************************************************
+
 set ttyfast " u got a fast terminal
-" " set ttyscroll=3
 set lazyredraw " to avoid scrolling problems
+" set ttyscroll=3
 " set timeoutlen=250
-" 
- " Cursorline/CursorColumn for current window only ****************
+
+" Cursorline/CursorColumn for current window only
 augroup Cursor
   au!
   au VimEnter,WinEnter,BufWinEnter * setlocal cursorline
@@ -362,7 +293,6 @@ augroup Cursor
   au VimEnter,WinEnter,BufWinEnter * setlocal cursorcolumn
   au WinLeave * setlocal nocursorcolumn
 augroup END
-"
 
 " Source the vimrc file after saving it
 augroup sourcing
@@ -370,17 +300,44 @@ augroup sourcing
   autocmd bufwritepost .vimrc source $MYVIMRC
 augroup END
 
-" " Syntax off for large files
-" "autocmd BufReadPre * if getfsize(expand("%")) > 1000000 | syntax off | endif
+" Syntax off for large files
+" autocmd BufReadPre * if getfsize(expand("%")) > 1000000 | syntax off | endif
+
 nmap s <Plug>(easymotion-s)
 xmap s <Plug>(easymotion-s)
 
-" Add spaces after comment delimiters by default
 command! FormatJSON %!python -m json.tool
 " autocmd BufNewFile,BufRead *.json set ft=javascript
-"
-"Coc stuff
-let g:coc_node_path = '/Users/xhu/.nvm/versions/node/v13.13.0/bin/node' "use more updated node
+
+" RG --------------------------------------------------------------------------
+let g:rg_command = '
+  \ rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --follow --hidden --vimgrep --color "always"
+  \ -g "!{.git,node_modules,vendor}/*" '
+" note --vimgrep takes over the previously set --hidden :( so easiest to find
+" in hidden with F. but need vimgrep for preview window for some reason until I redo that part manually
+
+" F seems a little different than Rg. can do F require('path') but Rg doesn't find. Rg <enter> then require('path') seems to work though.
+command! -bang -nargs=* F call fzf#vim#grep(g:rg_command .shellescape(<q-args>), 1, fzf#vim#with_preview(), <bang>0)
+
+" Get Files. override fzf :Files
+command! -bang -nargs=? -complete=dir Files
+    \ call fzf#vim#files(<q-args>, fzf#vim#with_preview({'options': ['--layout=reverse', '--info=inline']}), <bang>0)
+
+" copied from fzf.vim
+" make fzf completely delegate its search responsibliity to ripgrep, may be faster
+function! RipgrepFzf(query, fullscreen)
+  let command_fmt = 'rg --column --line-number --no-heading --color=always --smart-case -- %s || true'
+  let initial_command = printf(command_fmt, shellescape(a:query))
+  let reload_command = printf(command_fmt, '{q}')
+  let spec = {'options': ['--phony', '--query', a:query, '--bind', 'change:reload:'.reload_command]}
+  call fzf#vim#grep(initial_command, 1, fzf#vim#with_preview(spec), a:fullscreen)
+endfunction
+
+command! -nargs=* -bang RG call RipgrepFzf(<q-args>, <bang>0)
+" end rg ----------------------------------------------------------------------
+
+" Coc -------------------------------------------------------------------
+let g:coc_node_path = '/Users/xhu/.nvm/versions/node/v13.13.0/bin/node' " use more updated node
 " command! -nargs=0 Prettier :CocCommand prettier.formatFile
 
 " Don't pass messages to |ins-completion-menu|.
@@ -473,10 +430,10 @@ command! -nargs=0 Format :call CocAction('format')
 noremap <leader>fi :Format<cr>
 
 " Add `:Fold` command to fold current buffer.
-command! -nargs=? Fold :call     CocAction('fold', <f-args>)
+command! -nargs=? Fold :call CocAction('fold', <f-args>)
 
 " Add `:OR` command for organize imports of the current buffer.
-command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organizeImport')
+command! -nargs=0 OR :call CocAction('runCommand', 'editor.action.organizeImport')
 
 " Add (Neo)Vim's native statusline support.
 " NOTE: Please see `:h coc-status` for integrations with external plugins that
@@ -486,7 +443,7 @@ command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organize
 " set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 
 " Mappings using CoCList:
-" Show all diagnostics.
+" Show all diagnostics. clashing with some mappings
 " nnoremap <silent> <space>a  :<C-u>CocList diagnostics<cr>
 " " Manage extensions.
 " nnoremap <silent> <space>e  :<C-u>CocList extensions<cr>
@@ -504,8 +461,9 @@ command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organize
 " nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
 
 " navigate chunks of current buffer
-nmap [g <Plug>(coc-git-prevchunk)
-nmap ]g <Plug>(coc-git-nextchunk)
+" nmap [g <Plug>(coc-git-prevchunk)
+" nmap ]g <Plug>(coc-git-nextchunk)
+
 " show chunk diff at current position
 nmap gs <Plug>(coc-git-chunkinfo)
 " show commit contains current position
@@ -515,39 +473,22 @@ omap ig <Plug>(coc-git-chunk-inner)
 xmap ig <Plug>(coc-git-chunk-inner)
 omap ag <Plug>(coc-git-chunk-outer)
 xmap ag <Plug>(coc-git-chunk-outer)
+" end coc ---------------------------------------------------------------------
 
-" end coc stuff
-"
 " json c (with comments for cocconfig)
 " autocmd FileType json syntax match Comment +\/\/.\+$+
-
 " \ -g "*.{js,json,php,md,styl,jade,html,config,py,cpp,c,go,hs,rb,conf}"
 " \ -g "!*.{min.js,swp,o,zip}"
 
-let g:rg_command = '
-  \ rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --follow --hidden --vimgrep --color "always"
-  \ -g "!{.git,node_modules,vendor}/*" '
-" note --vimgrep takes over the previously set --hidden :( so easiest to find
-" in hidden with F. but need vimgrep for preview window for some reason until I redo that part manually
-
-" F seems a little different than Rg. can do F require('path') but Rg doesn't find. Rg <enter> then require('path') seems to work though.
-command! -bang -nargs=* F call fzf#vim#grep(g:rg_command .shellescape(<q-args>), 1, fzf#vim#with_preview(), <bang>0)
-
-"Get Files
-command! -bang -nargs=? -complete=dir Files
-    \ call fzf#vim#files(<q-args>, fzf#vim#with_preview({'options': ['--layout=reverse', '--info=inline']}), <bang>0)
-
-" copied from fzf.vim
-" make fzf completely delegate its search responsibliity to ripgrep, may be faster
-function! RipgrepFzf(query, fullscreen)
-  let command_fmt = 'rg --column --line-number --no-heading --color=always --smart-case -- %s || true'
-  let initial_command = printf(command_fmt, shellescape(a:query))
-  let reload_command = printf(command_fmt, '{q}')
-  let spec = {'options': ['--phony', '--query', a:query, '--bind', 'change:reload:'.reload_command]}
-  call fzf#vim#grep(initial_command, 1, fzf#vim#with_preview(spec), a:fullscreen)
+" Vista
+let g:vista_default_executive = 'coc'
+function! NearestMethodOrFunction() abort
+  return get(b:, 'vista_nearest_method_or_function', '')
 endfunction
-
-command! -nargs=* -bang RG call RipgrepFzf(<q-args>, <bang>0)
+" By default vista.vim never runs if you don't call it explicitly.
+" show the nearest function in your statusline automatically
+autocmd VimEnter * call vista#RunForNearestMethodOrFunction()
+let g:airline_section_y = "%{NearestMethodOrFunction()}"
 
 " TODO stopped working
 " vim-closetag
@@ -582,6 +523,7 @@ let g:closetag_emptyTags_caseSensitive = 1
 let g:closetag_regions = {
     \ 'typescript.tsx': 'jsxRegion,tsxRegion',
     \ 'javascript.jsx': 'jsxRegion',
+    \ 'javascriptreact': 'jsxRegion',
    \ }
 
 " Shortcut for closing tags, default is '>'
@@ -592,24 +534,8 @@ let g:closetag_shortcut = '>'
 let g:closetag_close_shortcut = '<leader>>'
 " end vim-closetags
 
-" -------------------------------------- Playing
-
-let g:WebDevIconsNerdTreeGitPluginForceVAlign = 1
-
-let g:vista_default_executive = 'coc'
-
-function! NearestMethodOrFunction() abort
-  return get(b:, 'vista_nearest_method_or_function', '')
-endfunction
-let g:airline_section_y = "%{NearestMethodOrFunction()}"
-
-" By default vista.vim never runs if you don't call it explicitly.
-" show the nearest function in your statusline automatically
-autocmd VimEnter * call vista#RunForNearestMethodOrFunction()
-
-let g:peekaboo_compact = 1
-noremap <leader>i :IndentLinesToggle<cr>
-
+" Playing with ----------------------------------------------------------------
+" let g:WebDevIconsNerdTreeGitPluginForceVAlign = 1 " for syntax highlighting plugin
 
 " attempt to replace nerdtree with netrw, needs work
 " map <silent><Leader>nf :let @/=expand("%:t") <Bar> execute 'Lex' expand("%:h") <Bar> normal n<CR>
