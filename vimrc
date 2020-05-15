@@ -62,8 +62,7 @@ Plug 'nightsense/cosmic_latte'
 Plug 'alvan/vim-closetag' " TODO re-eval workings
 Plug 'jiangmiao/auto-pairs' " replace Plug 'Raimondi/delimitMate'
 Plug 'tpope/vim-surround'
-Plug 'ntpeters/vim-better-whitespace' " highlight traling ws 
-" TODO seems to not be working until I change colorscheme again
+Plug 'ntpeters/vim-better-whitespace' " highlight trailing ws
 
 " Lang specific
 " Plug ap/vim-css-color
@@ -100,6 +99,7 @@ Plug 'weirongxu/coc-explorer', {'do': 'yarn install --frozen-lockfile'}
 " Playing with
 " -----------------------------------------------------------------
 " Plug 'tiagofumo/vim-nerdtree-syntax-highlight' " slow AF, also broken for
+" nvim
 Plug 'ryanoasis/vim-devicons'
 Plug 'Yggdroot/indentLine', {'on': 'IndentLinesToggle'}
 Plug 'liuchengxu/vista.vim'
@@ -107,9 +107,8 @@ Plug 'liuchengxu/vista.vim'
 Plug 'junegunn/vim-peekaboo'
 Plug 'luochen1990/rainbow' " needs config, broken
 
-" TODO try which-key
 " add a way to edit this file quickly
-" consider coc-actions which has floating windows ranger/ranger.vim/floaty ranger thing, coc-explorer, defx, vista, hydrangea, auto-pairs or delimitMate, floaterm
+" consider which-key, coc-actions which has floating windows ranger/ranger.vim/floaty ranger thing, coc-explorer, defx, floaterm
 " TODO try just using netrw? w some settings from https://www.youtube.com/watch?v=nDGhjk4Eqbc&list=LLz2frLr13jJWUBJJyD8im3w
 
 
