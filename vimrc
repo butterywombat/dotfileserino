@@ -278,7 +278,8 @@ set undofile
 
 " set ch=1 " make command one line high
 
-" noremap <leader>w :up<cr>
+" however interferes with my camelcase motion setup
+noremap <leader>w :up<cr> 
 
 set ttyfast " u got a fast terminal
 set lazyredraw " to avoid scrolling problems
