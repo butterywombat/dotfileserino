@@ -24,8 +24,10 @@ Plug 'knubie/vim-kitty-navigator'
 " General crap
 Plug 'preservim/nerdcommenter'
 Plug 'vim-airline/vim-airline' " TODO switch to lightline, less bloat
+Plug 'vim-airline/vim-airline-themes', {'on': 'AirlineTheme'} " not needed fluff, think most themes automagically set this too if theres a theme available
 Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-rhubarb'
 Plug 'ryanoasis/vim-devicons'
 Plug 'Yggdroot/indentLine', {'on': 'IndentLinesToggle'}
 Plug 'easymotion/vim-easymotion'
@@ -51,7 +53,7 @@ Plug 'tpope/vim-surround'
 Plug 'ntpeters/vim-better-whitespace' " highlight trailing ws
 
 " Lang specific
-" Plug ap/vim-css-color
+Plug 'ap/vim-css-color'
 "Plug 'pangloss/vim-javascript', {'for': 'javascript'}
 Plug 'yuezk/vim-js', {'for': 'javascript'} " compare w pangloss
 
@@ -111,7 +113,11 @@ let mapleader=","
 " set nocompatible " default for nvim
 filetype plugin indent on
 syntax on
-colorscheme gruvbox
+" colorscheme gruvbox
+
+" let g:nord_cursor_line_number_background = 1
+colorscheme nord
+
 set termguicolors " better colors, incl the colorcolumns
 set background=dark
 set encoding=utf-8
@@ -165,7 +171,7 @@ noremap yl ^y$
 noremap dl ^d$
 
 " go to end of line while in insert mode, stay in insert mode
-inoremap <C-e> <C-o>A
+inoremap <C-e> <C-o>$
 
 " find comma, append newline after comma
 nnoremap <leader>z f,a<cr><esc>
@@ -339,7 +345,7 @@ command! -nargs=* -bang RG call RipgrepFzf(<q-args>, <bang>0)
 
 " Coc -------------------------------------------------------------------
 let g:coc_node_path = '/Users/xhu/.nvm/versions/node/v13.13.0/bin/node' " use more updated node
-" command! -nargs=0 Prettier :CocCommand prettier.formatFile
+command! -nargs=0 Prettier :CocCommand prettier.formatFile
 
 " Don't pass messages to |ins-completion-menu|.
 set shortmess+=c
@@ -490,6 +496,8 @@ endfunction
 " show the nearest function in your statusline automatically
 autocmd VimEnter * call vista#RunForNearestMethodOrFunction()
 let g:airline_section_y = "%{NearestMethodOrFunction()}"
+
+let g:github_enterprise_urls = ['https://github.tlcinternal.com']
 
 " TODO stopped working
 " vim-closetag

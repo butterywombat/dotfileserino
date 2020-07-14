@@ -1,9 +1,8 @@
-Visual.style("cursor", "background-color: #9065b7;"); // is there a way to do this by domain? TODO make roam visual fatter to indicate more like normal mode
-aceVimMap("jk", "<Esc>", "insert"); // add a :x binding. how?
+Visual.style('cursor', 'background-color: #9065b7;'); // is there a way to do this by domain? TODO make roam visual fatter to indicate more like normal mode
+aceVimMap('jk', '<Esc>', 'insert'); // add a :x binding. how?
 
 //Roam stuff
-settings.clickableSelector =
-  "*.roam-block, *.rm-block-ref, *.rm-title-display, *.roam-log-preview";
+settings.clickableSelector = '*.roam-block, *.rm-block-ref, *.rm-title-display, *.roam-log-preview';
 // TODO check if this is checked for visual mode too, don't think so (missing .roam-block when the block is empty?
 // "isElementClickable"
 // settings.editableSelector = "*.roam-block, *.rm-block-ref, *.rm-title-display"; // TODO check surfingkeys to see what this does, sounds promising
@@ -12,82 +11,81 @@ settings.clickableSelector =
 // the current block you're typing into a textarea
 // also breaks f for some reason on roam
 
-// deprecated way, remove
-function triggerMouseEvent(node, eventType, triggerWithShift = true) {
-  let clickEvent = document.createEvent("MouseEvents");
-
-  clickEvent.initMouseEvent(
-    eventType,
-    true,
-    true,
-    window,
-    0,
-    0,
-    0,
-    0,
-    0,
-    false,
-    false,
-    triggerWithShift,
-    false,
-    0,
-    document.body.parentNode
-  );
-
-  node.dispatchEvent(clickEvent);
-}
-
-mapkey(
-  "F",
-  "Roamclick",
-  function() {
-    //todo need to scope this to roam
-    Hints.create(
-      "",
-      function(element, event) {
-        triggerMouseEvent(element, "mousedown"); // shift mousedown to open in sidebar
-      },
-      { domain: /roamresearch\.com/i }
+const simulateMouseEvent = function(element, eventNames, { x, y } = {}, shiftKey = false) {
+  if (typeof eventNames === 'string') eventNames = [eventNames];
+  eventNames.forEach(eventName => {
+    element.dispatchEvent(
+      // synchronous
+      new MouseEvent(eventName, {
+        view: window,
+        bubbles: true,
+        cancelable: true,
+        clientX: x,
+        clientY: y,
+        button: 0,
+        shiftKey
+      })
     );
-  },
-  { domain: /roamresearch\.com/i } // doesn't work
-);
-
-var simulateMouseEvent = function(element, eventName, coordX, coordY) {
-  element.dispatchEvent(
-    new MouseEvent(eventName, {
-      view: window,
-      bubbles: true,
-      cancelable: true,
-      clientX: coordX,
-      clientY: coordY,
-      button: 0,
-    })
-  );
+  });
 };
 
-// TODO file issue - should be vmapkey but doesn't seem to work with the domain feature
+const clickAtSFCursor = () => {
+  const skCursor = document.querySelector('.surfingkeys_cursor');
+  const { x, y } = skCursor.getBoundingClientRect();
+
+  const esc = new KeyboardEvent('keydown', {
+    bubbles: true,
+    cancelable: true,
+    keyCode: 27
+  });
+  document.body.dispatchEvent(esc); // or v again?
+
+  const elemFromPoint = document.elementFromPoint(x, y); // span etc
+  // TODO unsure if all mouseevents needed, weed out any unnecessary
+  simulateMouseEvent(elemFromPoint, ['mousedown', 'mouseup', 'click'], { x, y });
+  // console.log('clicked');
+  return { x, y };
+  // TODO if the elem is a link, dont click link, put cursor where it should
+  // be (how tho?)
+};
+
+// TODO file issue - should be vmapkey but doesn't seem to work with the domain feature, though logs work in clickAtSFCursor (whaat)
+// still rather buggy in roam after doing i. V location doesn't restore and
+// sometimes V doesn't work again until you do v
+mapkey('i', 'Roam insert after visual cursor placement', clickAtSFCursor, { domain: /roamresearch\.com/i });
+
 mapkey(
-  "I",
-  "Roam insert after visual cursor placement",
+  '<Ctrl-f>',
+  'Roam shift f (open in sidebar)',
   function() {
-    const skCursor = document.querySelector(".surfingkeys_cursor");
-    const { x, y } = skCursor.getBoundingClientRect();
+    Hints.create('', function(el) {
+      // dispatchMouseEvent(el, ["mousedown", "click", "mouseup"], true); // from surfingkeys, seems like behavior is different for some reason though code looked the same. left sidebar opens in new tab, main window links do not open
 
-    const esc = new KeyboardEvent("keydown", {
-      bubbles: true,
-      cancelable: true,
-      keyCode: 27,
+      // TODO left sidebar links open in new window (why?), main window links open correctly
+      simulateMouseEvent(el, ['mousedown', 'click', 'mouseup'], undefined, true); // shift mousedown to open in sidebar
     });
-    document.body.dispatchEvent(esc); // or v again?
+  },
+  { domain: /roamresearch\.com/i }
+);
 
-    const elemFromPoint = document.elementFromPoint(x, y);
-    // TODO unsure if all mouseevents needed, weed out any unnecessary
-    simulateMouseEvent(elemFromPoint, "mousedown", x, y);
-    simulateMouseEvent(elemFromPoint, "mouseup", x, y);
-    simulateMouseEvent(elemFromPoint, "click", x, y);
-    // TODO if the elem is a link, dont click link, put cursor where it should
-    // be (how tho?)
+unmapAllExcept(['f', 'F', '/', 'C', '?', 't', 'T', 'S', 'D', 'j', 'k', 'J', 'K', 'cs', 'cS'], /roamresearch\.com/i);
+
+mapkey(
+  'd',
+  'Roam delete after visual range selected',
+  () => {
+    let selection = getSelection();
+    const { x, y } = clickAtSFCursor();
+    setTimeout(() => {
+      const newElemFromPt = document.elementFromPoint(x, y);
+      console.log('newElemFromPt should be textarea', newElemFromPt);
+      console.log('x', x);
+      console.log('y', y);
+      console.log('chars to del:', selection.extentOffset - selection.anchorOffset); // research these offsets, there were many on there then click for insert and remove
+      newElemFromPt.setSelectionRange(selection.extentOffset, selection.anchorOffset); // then delete
+      selection = getSelection();
+      selection.deleteFromDocument();
+    });
   },
   { domain: /roamresearch\.com/i }
 );
@@ -97,3 +95,5 @@ mapkey(
 
 // let visual range mode work to delete/change automagically? may not be too
 // difficult to implement if it's all in the same block
+//
+// TODO implement U undo
