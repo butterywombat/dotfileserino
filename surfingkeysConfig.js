@@ -68,7 +68,7 @@ mapkey(
   { domain: /roamresearch\.com/i }
 );
 
-unmapAllExcept(['f', 'F', '/', 'C', '?', 't', 'T', 'S', 'D', 'j', 'k', 'J', 'K', 'cs', 'cS'], /roamresearch\.com/i);
+unmapAllExcept(['f', 'F', '/', 'C', '?', 't', 'T', 'r', 'S', 'cs', 'cS'], /roamresearch\.com/i);
 
 mapkey(
   'd',

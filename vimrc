@@ -52,6 +52,7 @@ Plug 'jiangmiao/auto-pairs' " replace Plug 'Raimondi/delimitMate'
 Plug 'tpope/vim-surround'
 Plug 'ntpeters/vim-better-whitespace' " highlight trailing ws
 
+
 " Lang specific
 Plug 'ap/vim-css-color'
 "Plug 'pangloss/vim-javascript', {'for': 'javascript'}
@@ -166,6 +167,10 @@ set shell=/usr/local/bin/zsh
 " keybindings/maps
 nnoremap <space> :
 
+" removes </word/> delims in search registry
+nnoremap * g*
+
+
 " yank and delete line without newline
 noremap yl ^y$
 noremap dl ^d$
@@ -184,7 +189,33 @@ nmap <CR> :nohlsearch<CR>
 
 " fzf
 nmap <Leader>t :Files<CR>
+nmap <Leader>p :GFiles<CR>
+
+" best git status
+nmap <silent><Leader>gs :GFiles?<CR> 
+" remember to also use fugitive :Gst
+
 nmap ; :Buffers<CR>
+nnoremap rg :RG 
+" search for word under cursor
+nnoremap <silent><leader>* :RG <C-R><C-W><CR>
+" search for last yanked item
+nnoremap <silent><leader>y :RG <C-R>"<CR>
+" search for last searched term
+nnoremap <silent><leader>s :RG <C-R>/<CR>
+
+" Vim keybindings fzf
+" Mapping selecting mappings
+nmap <leader><tab> <plug>(fzf-maps-n)
+xmap <leader><tab> <plug>(fzf-maps-x)
+omap <leader><tab> <plug>(fzf-maps-o)
+
+" Insert mode completion
+imap <c-x><c-k> <plug>(fzf-complete-word)
+imap <c-x><c-f> <plug>(fzf-complete-path)
+imap <c-x><c-l> <plug>(fzf-complete-line)
+
+" end fzf
 
 noremap <leader>i :IndentLinesToggle<cr>
 
@@ -194,13 +225,15 @@ noremap <leader>nf :NERDTreeFind<cr>
 
 noremap <leader>al :ALEFix<cr>
 
+" from Erik Falor - From Vim Muggle to Wizard in 10 Easy Steps (8) video
+" will execute the current line in shell and pipe back to buffer
+noremap Q !!sh<CR>
+
 " nmap <leader>q ysiw'
 " nmap <silent><leader>s :set spell!<CR>
 " nmap <leader>l :set list!<CR>
 
 " TODO prune from here
-" dubious
-nnoremap dp :diffput<cr>
 autocmd BufReadPost quickfix nmap <buffer> <CR> <CR>
 " autocmd BufNewFile * silent! 0r $VIMHOME/templates/%:e.tpl
 " au BufNewFile,BufRead *.frag,*.vert,*.fp,*.vp,*.glsl setf glsl
@@ -317,6 +350,8 @@ command! FormatJSON %!python -m json.tool
 " autocmd BufNewFile,BufRead *.json set ft=javascript
 
 " RG --------------------------------------------------------------------------
+set grepprg=rg\ --vimgrep " for fugitive Ggrep
+
 let g:rg_command = '
   \ rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --follow --hidden --vimgrep --color "always"
   \ -g "!{.git,node_modules,vendor}/*" '
@@ -378,9 +413,9 @@ else
   imap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 endif
 
-" Use `[g` and `]g` to navigate diagnostics
-nmap <silent> [g <Plug>(coc-diagnostic-prev)
-nmap <silent> ]g <Plug>(coc-diagnostic-next)
+" Use `[d` and `]d` to navigate diagnostics
+nmap <silent> [d <Plug>(coc-diagnostic-prev)
+nmap <silent> ]d <Plug>(coc-diagnostic-next)
 
 " GoTo code navigation.
 nmap <silent> gd <Plug>(coc-definition)
@@ -426,7 +461,7 @@ xmap af <Plug>(coc-funcobj-a)
 omap if <Plug>(coc-funcobj-i)
 omap af <Plug>(coc-funcobj-a)
 
-" Use <TAB> for selections ranges.
+" Use <TAB> for selections ranges. syntax tree selection
 " NOTE: Requires 'textDocument/selectionRange' support from the language server.
 " coc-tsserver, coc-python are the examples of servers that support it.
 nmap <silent> <S-tab> <Plug>(coc-range-select)
@@ -468,11 +503,12 @@ command! -nargs=0 OR :call CocAction('runCommand', 'editor.action.organizeImport
 " nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
 
 " navigate chunks of current buffer
-" nmap [g <Plug>(coc-git-prevchunk)
-" nmap ]g <Plug>(coc-git-nextchunk)
+nmap [g <Plug>(coc-git-prevchunk)
+nmap ]g <Plug>(coc-git-nextchunk)
 
 " show chunk diff at current position
 nmap gs <Plug>(coc-git-chunkinfo)
+
 " show commit contains current position
 nmap gc <Plug>(coc-git-commit)
 " create text object for git chunks

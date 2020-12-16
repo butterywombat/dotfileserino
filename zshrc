@@ -44,7 +44,7 @@ open-unstaged() {
 
 
 # try to fix tmux powerline printed multiple times
-export LC_ALL=en_US.UTF-8 export LANG=en_US.UTF-8 export LANGUAGE=en_US.UTF-8
+# export LC_ALL=en_US.UTF-8 export LANG=en_US.UTF-8 export LANGUAGE=en_US.UTF-8
 # if not inside tmux already, replace current bash process by tmux
 # [ -z "$TMUX" ] && exec tmux
 

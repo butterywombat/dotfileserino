@@ -4,6 +4,7 @@
   },
   "prettier": {
     "eslintIntegration": true,
+    "tslintIntegration": true,
     "stylelintIntegration": true
   },
   "coc.preferences.formatOnSaveFiletypes": [

@@ -14,6 +14,7 @@ alias godebug="export NODE_ENV='lcdev' node --inspect ./ | bunyan"
 alias godemo="NODE_ENV=demo LOCAL_AUTH=true yarn start"
 alias godemob="NODE_ENV=demo LOCAL_AUTH=true ndb yarn start"
 alias godemobug="NODE_ENV='demo' LOCAL_AUTH=true node --inspect ./node_modules/ui-zephyr/src/bin/zephyr-transpile | bunyan"
+alias gostagebug="NODE_ENV='stage' LOCAL_AUTH=true node --inspect ./node_modules/ui-zephyr/src/bin/zephyr-transpile | bunyan"
 alias lo="git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
 alias testnode="node_modules/.bin/mocha --require node_modules/ui-zephyr/src/shared_modules/node-test-runner/babel-setup.js --require src/shared_modules/client-test-setup/client-test-setup.js" # add path-to-test.js and maybe --inspect-brk
 alias wa="yarn watchAssets"
