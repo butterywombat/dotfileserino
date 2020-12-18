@@ -3,9 +3,13 @@
     "showUnused": true // not working?
   },
   "prettier": {
+    // defaults if no prettierrc
     "eslintIntegration": true,
     "tslintIntegration": true,
-    "stylelintIntegration": true
+    "stylelintIntegration": true,
+    "printWidth": 120,
+    "singleQuote": true,
+    "semi": false
   },
   "coc.preferences.formatOnSaveFiletypes": [
     "javascript",

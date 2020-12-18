@@ -192,7 +192,7 @@ nmap <Leader>t :Files<CR>
 nmap <Leader>p :GFiles<CR>
 
 " best git status
-nmap <silent><Leader>gs :GFiles?<CR> 
+nmap <silent><Leader>gs :GFiles?<CR>
 " remember to also use fugitive :Gst
 
 nmap ; :Buffers<CR>
@@ -381,6 +381,7 @@ command! -nargs=* -bang RG call RipgrepFzf(<q-args>, <bang>0)
 " Coc -------------------------------------------------------------------
 let g:coc_node_path = '/Users/xhu/.nvm/versions/node/v13.13.0/bin/node' " use more updated node
 command! -nargs=0 Prettier :CocCommand prettier.formatFile
+command! -nargs=0 Eslint :CocCommand eslint.executeAutofix
 
 " Don't pass messages to |ins-completion-menu|.
 set shortmess+=c

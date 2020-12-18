@@ -20,4 +20,6 @@ alias testnode="node_modules/.bin/mocha --require node_modules/ui-zephyr/src/sha
 alias wa="yarn watchAssets"
 
 alias gpr="git pull --rebase origin develop"
+alias gcgmail='git config --local user.email dxuehu@gmail.com'
+alias gcworkmail='git config --local user.email xhu@lendingclub.com'
 
