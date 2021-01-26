@@ -32,6 +32,14 @@ Plug 'ryanoasis/vim-devicons'
 Plug 'Yggdroot/indentLine', {'on': 'IndentLinesToggle'}
 Plug 'easymotion/vim-easymotion'
 Plug 'bkad/CamelCaseMotion'
+Plug 'justinmk/vim-sneak' " 2 char f/t
+let g:sneak#s_next = 1
+let g:sneak#label = 1
+map f <Plug>Sneak_s
+map F <Plug>Sneak_S
+" for some reason my s/S are taken by 'remove char/line and enter insert mode'- how?  
+map t <Plug>Sneak_t
+map T <Plug>Sneak_T
 
 Plug 'metakirby5/codi.vim', {'on': 'Codi'} " replify
 
@@ -191,9 +199,14 @@ nmap <CR> :nohlsearch<CR>
 nmap <Leader>t :Files<CR>
 nmap <Leader>p :GFiles<CR>
 
-" best git status
-nmap <silent><Leader>gs :GFiles?<CR>
-" remember to also use fugitive :Gst
+" git status
+nmap <silent><Leader>G :GFiles?<CR>
+
+" or maybe gt, go for theirs, ours
+nmap <leader>g1 :diffget //2 <bar> diffup<CR> 
+nmap <leader>g2 :diffget //3 <bar> diffup<CR>
+nmap <silent><Leader>gs :G<CR>
+" fugitive git status
 
 nmap ; :Buffers<CR>
 nnoremap rg :RG 
@@ -343,8 +356,8 @@ augroup END
 " Syntax off for large files
 " autocmd BufReadPre * if getfsize(expand("%")) > 1000000 | syntax off | endif
 
-nmap s <Plug>(easymotion-s)
-xmap s <Plug>(easymotion-s)
+nmap <leader>em <Plug>(easymotion-s)
+xmap <leader>em <Plug>(easymotion-s)
 
 command! FormatJSON %!python -m json.tool
 " autocmd BufNewFile,BufRead *.json set ft=javascript
@@ -382,6 +395,7 @@ command! -nargs=* -bang RG call RipgrepFzf(<q-args>, <bang>0)
 let g:coc_node_path = '/Users/xhu/.nvm/versions/node/v13.13.0/bin/node' " use more updated node
 command! -nargs=0 Prettier :CocCommand prettier.formatFile
 command! -nargs=0 Eslint :CocCommand eslint.executeAutofix
+" setup autofixonsave/eslint as a formatter by following coc-eslint docs (still using coc-prettier/prettier-eslint for now)
 
 " Don't pass messages to |ins-completion-menu|.
 set shortmess+=c
