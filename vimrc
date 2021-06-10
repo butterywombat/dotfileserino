@@ -38,6 +38,8 @@ let g:sneak#label = 1
 map f <Plug>Sneak_s
 map F <Plug>Sneak_S
 " for some reason my s/S are taken by 'remove char/line and enter insert mode'- how?  
+" cl/cc do the same as S/s
+ " note using T then pressing t means going backwards, and T is forwards now (base dir changed)
 map t <Plug>Sneak_t
 map T <Plug>Sneak_T
 
@@ -395,6 +397,7 @@ command! -nargs=* -bang RG call RipgrepFzf(<q-args>, <bang>0)
 let g:coc_node_path = '/Users/xhu/.nvm/versions/node/v13.13.0/bin/node' " use more updated node
 command! -nargs=0 Prettier :CocCommand prettier.formatFile
 command! -nargs=0 Eslint :CocCommand eslint.executeAutofix
+command! -nargs=0 Bro :CocCommand git.browserOpen " like Gbro but specific line
 " setup autofixonsave/eslint as a formatter by following coc-eslint docs (still using coc-prettier/prettier-eslint for now)
 
 " Don't pass messages to |ins-completion-menu|.
@@ -440,12 +443,14 @@ nmap <silent> gr <Plug>(coc-references)
 
 " Use K to show documentation in preview window.
 nnoremap <silent> K :call <SID>show_documentation()<CR>
+" nnoremap <silent> K :call CocActionAsync('showSignatureHelp')<CR>
 
 function! s:show_documentation()
   if (index(['vim','help'], &filetype) >= 0)
     execute 'h '.expand('<cword>')
   else
     call CocAction('doHover')
+    " call CocActionAsync('showSignatureHelp')
   endif
 endfunction
 
@@ -517,12 +522,14 @@ command! -nargs=0 OR :call CocAction('runCommand', 'editor.action.organizeImport
 " " Resume latest coc list.
 " nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
 
-" navigate chunks of current buffer
+" navigate chunks of current buffer ([c and ]c use fugitive to navigate the
+" same)
 nmap [g <Plug>(coc-git-prevchunk)
 nmap ]g <Plug>(coc-git-nextchunk)
 
 " show chunk diff at current position
 nmap gs <Plug>(coc-git-chunkinfo)
+nmap <leader>cu :CocCommand git.chunkUndo<CR>
 
 " show commit contains current position
 nmap gc <Plug>(coc-git-commit)
