@@ -627,3 +627,7 @@ vnoremap <silent> # :<C-U>
   \gvy?<C-R>=&ic?'\c':'\C'<CR><C-R><C-R>=substitute(
   \escape(@", '?\.*$^~['), '\_s\+', '\\_s\\+', 'g')<CR><CR>
   \gVzv:call setreg('"', old_reg, old_regtype)<CR>
+
+" easy console log
+" imap clg console.log()<Esc>==f(<CR>a
+" vmap gl cclg<Esc>p

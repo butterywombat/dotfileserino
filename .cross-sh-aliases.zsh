@@ -12,6 +12,7 @@ alias fix='$EDITOR +/HEAD `git diff --name-only --diff-filter=U | uniq`'
 alias hok='z ui && wa'
 alias godebug="export NODE_ENV='lcdev' node --inspect ./ | bunyan"
 alias godemo="NODE_ENV=demo LOCAL_AUTH=true yarn start"
+alias gostage="NODE_ENV=stage LOCAL_AUTH=true yarn start"
 alias godemob="NODE_ENV=demo LOCAL_AUTH=true ndb yarn start"
 alias godemobug="NODE_ENV='demo' LOCAL_AUTH=true node --inspect ./node_modules/ui-zephyr/src/bin/zephyr-transpile | bunyan"
 alias gostagebug="NODE_ENV='stage' LOCAL_AUTH=true node --inspect ./node_modules/ui-zephyr/src/bin/zephyr-transpile | bunyan"
