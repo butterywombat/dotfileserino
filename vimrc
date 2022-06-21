@@ -37,7 +37,7 @@ let g:sneak#s_next = 1
 let g:sneak#label = 1
 map f <Plug>Sneak_s
 map F <Plug>Sneak_S
-" for some reason my s/S are taken by 'remove char/line and enter insert mode'- how?  
+" for some reason my s/S are taken by 'remove char/line and enter insert mode'- how?
 " cl/cc do the same as S/s
  " note using T then pressing t means going backwards, and T is forwards now (base dir changed)
 map t <Plug>Sneak_t

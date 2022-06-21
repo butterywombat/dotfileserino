@@ -69,3 +69,5 @@ app_start() {
 }
 
 [ -f ~/.fzf.zsh ] && . ~/.fzf.zsh
+
+export NODE_EXTRA_CA_CERTS=/etc/ssl/cert.pem
