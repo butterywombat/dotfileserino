@@ -394,7 +394,7 @@ command! -nargs=* -bang RG call RipgrepFzf(<q-args>, <bang>0)
 " end rg ----------------------------------------------------------------------
 
 " Coc -------------------------------------------------------------------
-let g:coc_node_path = '/Users/xhu/.nvm/versions/node/v13.13.0/bin/node' " use more updated node
+let g:coc_node_path = '/Users/xhu/.nvm/versions/node/v14.18.3/bin/node' " use more updated node
 command! -nargs=0 Prettier :CocCommand prettier.formatFile
 command! -nargs=0 Eslint :CocCommand eslint.executeAutofix
 command! -nargs=0 Bro :CocCommand git.browserOpen " like Gbro but specific line
