@@ -8,6 +8,8 @@
   excludesfile = ~/.gitignore_global
 [credential]
   helper = osxkeychain
+	helper = 
+	helper = /usr/local/share/gcm-core/git-credential-manager
 [push]
   default = current
 [alias]
@@ -16,3 +18,5 @@
   autosetuprebase = always
 [pull]
 	rebase = true
+[credential "https://dev.azure.com"]
+	useHttpPath = true

@@ -11,7 +11,7 @@ export EDITOR='nvim'
 export FZF_DEFAULT_COMMAND='rg --files --no-ignore-vcs --hidden'
 export FZF_CTRL_T_COMMAND='rg --files --no-ignore-vcs --hidden'
 export FZF_DEFAULT_OPTS="--reverse --inline-info"
-export BAT_THEME='Nord'
+# export BAT_THEME='Nord'
 
 # todo figure out which plugins I need/uninstall
 # plugins=(git tmux nvm vi-mode z yarn command-not-found zsh-syntax-highlighting)
