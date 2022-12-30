@@ -11,7 +11,7 @@ export EDITOR='nvim'
 export FZF_DEFAULT_COMMAND='rg --files --no-ignore-vcs --hidden'
 export FZF_CTRL_T_COMMAND='rg --files --no-ignore-vcs --hidden'
 export FZF_DEFAULT_OPTS="--reverse --inline-info"
-# export BAT_THEME='Nord'
+export BAT_THEME='Nord'
 
 # todo figure out which plugins I need/uninstall
 # plugins=(git tmux nvm vi-mode z yarn command-not-found zsh-syntax-highlighting)
@@ -19,10 +19,11 @@ plugins=(git nvm vi-mode z yarn command-not-found zsh-syntax-highlighting)
 
 . $ZSH/oh-my-zsh.sh
 
-# export NVM_DIR="$HOME/.nvm"
-[ -s "/usr/local/opt/nvm/nvm.sh" ] && . "/usr/local/opt/nvm/nvm.sh"  # This loads nvm
+eval "$(fnm env --use-on-cd)"
+# # export NVM_DIR="$HOME/.nvm"
+# [ -s "/usr/local/opt/nvm/nvm.sh" ] && . "/usr/local/opt/nvm/nvm.sh"  # This loads nvm
 # # [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm which one?
-[ -s "/usr/local/opt/nvm/etc/bash_completion.d/nvm" ] && . "/usr/local/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
+# [ -s "/usr/local/opt/nvm/etc/bash_completion.d/nvm" ] && . "/usr/local/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
 
 open-unstaged() {
   v `git status --porcelain | awk '{print $2}'`

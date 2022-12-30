@@ -3,7 +3,7 @@ alias v='nvim'
 alias vim='nvim'
 alias vimdiff='nvim -d'
 alias kit="v ~/.config/kitty/kitty.conf"
-alias t='tmux' #alias hok='z ui && wa'
+alias t='tmux'
 
 alias amend!="gca --amend -C HEAD"
 alias fix='$EDITOR +/HEAD `git diff --name-only --diff-filter=U | uniq`'

@@ -20,20 +20,26 @@ brew 'zsh'
 brew 'node'
 brew 'git'
 brew 'nginx'
-brew 'yarn'
+brew 'bat'
+# brew 'yarn'
 brew 'htop'
 brew 'ytop'
 brew 'ranger'
+brew 'fnm'
 
 # brew 'gh'
 # brew 'tmux'
-# brew 'bat'
 # brew 'hub'
 # brew 'fish'
 # brew 'python', tig
 # brew 'cjbassi/ytop/ytop'
 # brew 'asciinema'
 # brew 'youtube-dl'
+# brew install bash-completion
+
+# brew install docker-completion
+# brew install docker-compose-completion
+# brew install docker-machine-completion
 
 
 # Casks
@@ -51,6 +57,7 @@ cask 'datagrip'
 cask 'webstorm'
 cask 'spotify'
 
+# cask 'docker'
 # cask 'kindle'
 # cask 'evernote'
 # cask 'flux'

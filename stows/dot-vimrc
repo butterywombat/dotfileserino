@@ -19,7 +19,9 @@ Plug 'justinmk/vim-dirvish'
 Plug 'kristijanhusak/vim-dirvish-git'
 
 " Plug 'christoomey/vim-tmux-navigator'
-Plug 'knubie/vim-kitty-navigator'
+" Plug 'knubie/vim-kitty-navigator'
+" Plug 'knubie/vim-kitty-navigator', {'do': 'cp ./*.py ~/.config/kitty/'}
+Plug 'knubie/vim-kitty-navigator', {'do': 'ln -s ./*.py ~/.config/kitty/'} " attempt, else do the above
 
 " General crap
 Plug 'preservim/nerdcommenter'
