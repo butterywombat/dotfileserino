@@ -1,9 +1,19 @@
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
+# Set PATH, MANPATH, etc., for Homebrew.
+eval "$(/opt/homebrew/bin/brew shellenv)"
+
 export PATH=$HOME/bin:/usr/local/bin:$HOME/.lc2/bin:$PATH
 export ZSH="/Users/xhu/.oh-my-zsh"
 
 # ZSH_THEME="agnoster"
 POWERLEVEL9K_MODE='nerdfont-complete'
-ZSH_THEME='powerlevel9k/powerlevel9k'
+ZSH_THEME='powerlevel10k/powerlevel10k'
 COMPLETION_WAITING_DOTS='true'
 DISABLE_UPDATE_PROMPT=true # auto update without prompt
 
@@ -16,6 +26,8 @@ export BAT_THEME='Nord'
 # todo figure out which plugins I need/uninstall
 # plugins=(git tmux nvm vi-mode z yarn command-not-found zsh-syntax-highlighting)
 plugins=(git nvm vi-mode z yarn command-not-found zsh-syntax-highlighting)
+
+zstyle ':omz:update' mode reminder  # just remind me to update when it's time
 
 . $ZSH/oh-my-zsh.sh
 
@@ -33,6 +45,8 @@ open-unstaged() {
 #
 # aliases
 [ -f ~/.cross-sh-aliases.zsh ] && . ~/.cross-sh-aliases.zsh
+alias zshconfig="v ~/.zshrc"
+alias ohmyzsh="v ~/.oh-my-zsh"
 
 [ -f ~/.lc.zsh ] && . ~/.lc.zsh
 
@@ -72,3 +86,6 @@ app_start() {
 [ -f ~/.fzf.zsh ] && . ~/.fzf.zsh
 
 export NODE_EXTRA_CA_CERTS=/etc/ssl/cert.pem
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh

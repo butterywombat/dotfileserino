@@ -1,5 +1,5 @@
-xcode-select --install
-NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+# xcode-select --install
+# NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 brew bundle
 # brew install $(cat ./brew/brew.list)
 # brew tap homebrew/cask-fonts # TODO NEEDED?
@@ -7,9 +7,10 @@ brew bundle
 # consider using brew bundle!
 
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" --unattended
-# chsh -s /usr/local/bin/zsh
-# TODO may need to install plugins and run the above and launch zsh, and also add it to etc/shells
-# git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
+chsh -s /usr/local/bin/zsh
+# may need to run the above and launch zsh, and also add it to etc/shells
+git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
+git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
 
 
 stow stows -t ~ --dotfiles
@@ -17,10 +18,9 @@ stow stows -t ~ --dotfiles
 luarocks install fennel
 git clone https://github.com/agzam/spacehammer ~/.hammerspoon
 
-npm install yarn
-
 git clone --depth 1 https://github.com/dexpota/kitty-themes.git ~/.config/kitty/kitty-themes
 git clone https://github.com/butterywombat/nord-kitty.git ~/code/opensource
+ln -s ./kitty ~/.config/kitty
 ln -s ~/code/opensource/nord-kitty/Nord.conf ~/.config/kitty/kitty-themes/Nord.conf
 # this is kinda convoluted, maybe some other impl
 
@@ -31,7 +31,7 @@ ln -s ~/code/opensource/nord-kitty/Nord.conf ~/.config/kitty/kitty-themes/Nord.c
 # ln -s coc-settings.json ~/config/nvim/coc-settings.json
 # ln -s ~/.vimrc ~/config/nvim/init.vim
 
-npm install -g bunyan create-react-app gulp gtop leetcode-cli mocha ndb nodemon prettier server sinon source-map-explorer standard typescript
+npm install -g yarn bunyan create-react-app gulp gtop leetcode-cli mocha ndb nodemon prettier server sinon source-map-explorer standard typescript
 
 # TODO not sure where exa aliases are - l=ls -lah
 

@@ -6,6 +6,7 @@
 
 tap 'cjbassi/ytop'
 tap 'homebrew/cask-fonts'
+tap 'microscoft/git'
 
 # install packages
 brew 'stow'
@@ -21,6 +22,7 @@ brew 'node'
 brew 'git'
 brew 'nginx'
 brew 'bat'
+brew 'exa'
 # brew 'yarn'
 brew 'htop'
 brew 'ytop'
