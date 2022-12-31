@@ -1,6 +1,6 @@
 {
   "javascript": {
-    "showUnused": true // not working?
+    "showUnused": true
   },
   "prettier": {
     // defaults if no prettierrc
@@ -11,6 +11,7 @@
     "singleQuote": true,
     "semi": false
   },
+  "typescript.preferences.importModuleSpecifier": "non-relative", // try to make webpack aliases work, not working
   "coc.preferences.formatOnSaveFiletypes": [
     "javascript",
     "typescript",
@@ -20,6 +21,7 @@
     "css",
     "markdown"
   ],
+  // "eslint.autoFixOnSave": true, // setup to use eslint to --fix using prettier eslint plugins. else we had it without this and using prettier in the terminal, but eslint through project scripts. if the latter, then must yarn first as using project prettier (not global prettier) TODO may have to remove to avoid running both later- pick one! maybe comment this one out as the prettier prefs are above and more to comment out/test
   "eslint.filetypes": [
     // needed?
     "javascript",

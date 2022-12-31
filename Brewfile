@@ -6,7 +6,7 @@
 
 tap 'cjbassi/ytop'
 tap 'homebrew/cask-fonts'
-tap 'microscoft/git'
+tap 'microsoft/git'
 
 # install packages
 brew 'stow'
@@ -21,19 +21,20 @@ brew 'zsh'
 brew 'node'
 brew 'git'
 brew 'nginx'
-brew 'bat'
+brew 'bat' # used by fzf previewer, uses its own theme
 brew 'exa'
 # brew 'yarn'
 brew 'htop'
 brew 'ytop'
 brew 'ranger'
 brew 'fnm'
+brew 'python'
 
+# tig
 # brew 'gh'
 # brew 'tmux'
 # brew 'hub'
 # brew 'fish'
-# brew 'python', tig
 # brew 'cjbassi/ytop/ytop'
 # brew 'asciinema'
 # brew 'youtube-dl'

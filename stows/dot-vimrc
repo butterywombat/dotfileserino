@@ -12,7 +12,6 @@ Plug 'dstein64/vim-startuptime', {'on': 'StartupTime'}
 " Plug '/usr/local/opt/fzf'
 Plug '/opt/homebrew/opt/fzf' " if mac m1 silicon
 Plug 'junegunn/fzf.vim' " , {'on': 'Files'}
-" Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 
 " Navigation
 Plug 'preservim/nerdtree', {'on': ['NERDTreeToggle', 'NERDTreeFind']}
@@ -69,14 +68,18 @@ Plug 'ntpeters/vim-better-whitespace' " highlight trailing ws
 
 " Lang specific
 Plug 'ap/vim-css-color'
-"Plug 'pangloss/vim-javascript', {'for': 'javascript'}
-Plug 'yuezk/vim-js', {'for': 'javascript'} " compare w pangloss
+Plug 'pangloss/vim-javascript', {'for': 'javascript'} "TODO enable
+" Plug 'yuezk/vim-js', {'for': 'javascript'} " compared to above, seems to create issues opening js files and no syntax highlighting sometimes
 
 Plug 'maxmellon/vim-jsx-pretty', {'for': 'javascript'}
 Plug 'mustache/vim-mustache-handlebars', {'for': 'handlebars'}
 " Plug 'sheerun/vim-polyglot'
 
-Plug 'heavenshell/vim-jsdoc', {'tag': '1.0.0'} " 2.0 doesn't support nvim
+" not great, maybe don't need
+Plug 'heavenshell/vim-jsdoc', {
+  \ 'for': ['javascript', 'javascript.jsx','typescript'],
+  \ 'do': 'make install'
+\}
 
 " LSP and lintings
 Plug 'dense-analysis/ale', {'on': 'ALEFix'}
@@ -174,6 +177,9 @@ set incsearch " search stuff
 set hlsearch
 set ignorecase
 set smartcase
+
+" disable mouse select triggering visual select
+set mouse=
 
 set showcmd " show command in bottom right portion of the screen
 set updatetime=250
@@ -287,6 +293,7 @@ let g:gitgutter_eager = 0
 " coc stylelint + prettier seem to be lacking, use ale for that
 let g:ale_linters = {'scss': ['prettier', 'stylelint'], 'javascript': ['prettier', 'eslint']}
 let g:ale_fixers = {'scss': ['prettier', 'stylelint'], 'javascript': ['prettier', 'eslint']}
+" looks like ale can use the cmd line prettier (so global one) unlike coc n format
 
 let g:jsdoc_allow_input_prompt = 1
 let g:jsdoc_enable_es6 = 1
@@ -538,6 +545,9 @@ nmap ]g <Plug>(coc-git-nextchunk)
 
 " show chunk diff at current position
 nmap gs <Plug>(coc-git-chunkinfo)
+" similar:
+nmap gph :GitGutterPreviewHunk<CR>
+
 nmap <leader>cu :CocCommand git.chunkUndo<CR>
 
 " show commit contains current position
