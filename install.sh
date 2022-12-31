@@ -1,5 +1,5 @@
 # xcode-select --install
-# NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 brew bundle
 # brew install $(cat ./brew/brew.list)
 # brew tap homebrew/cask-fonts # TODO NEEDED?
@@ -8,7 +8,7 @@ brew bundle
 
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" --unattended
 chsh -s /usr/local/bin/zsh
-# may need to run the above and launch zsh, and also add it to etc/shells
+# may need to run the above and launch zsh, and also add it to etc/shells but didn't seem like it
 git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
 git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
 
@@ -40,5 +40,14 @@ npm install -g yarn bunyan eslint create-react-app gulp gtop leetcode-cli mocha 
 . macSettings.sh
 # TODO these dont seem to be working?
 #
-# remember to 1) copy .npmrc over for artifactory, 2) copy keysecure (also has zscaler certs), 3) install git pr script
-git clone https://github.com/dxuehu/webstormsettings.git ~/code/webstormsettings
+# FOR LC:
+# remember to 1) copy .npmrc over for artifactory, 2) copy keysecure (also has zscaler certs), 2.5) copy zscaler cert to end of /etc/ssl/cert.pem 3) install git pr script
+
+# TODO:
+# 2.6) zscaler workaround for datagrip other intelliJ
+# TODO still strange: vscode doesn't detect node
+
+# I think these are buggy
+# git clone https://github.com/dxuehu/webstormsettings.git ~/code/webstormsettings
+# also not sure if the gitconfigs are working properly
+

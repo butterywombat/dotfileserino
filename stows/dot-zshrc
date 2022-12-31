@@ -89,3 +89,6 @@ export NODE_EXTRA_CA_CERTS=/etc/ssl/cert.pem
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+# test to see if this helps the vscode terminal - don't think it does
+# [[ "$TERM_PROGRAM" == "vscode" ]] && . "$(code --locate-shell-integration-path zsh)"
