@@ -14,29 +14,28 @@ git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$
 
 
 stow stows -t ~ --dotfiles
+# maybe vimrc one not needed
+
+ln -s ~/.vimrc ~/.config/nvim/init.vim
+sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
+       https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+ln -s coc-settings.json ~/.config/nvim/coc-settings.json
 
 luarocks install fennel
 git clone https://github.com/agzam/spacehammer ~/.hammerspoon
 
+ln -s ./kitty ~/.config/kitty
 git clone --depth 1 https://github.com/dexpota/kitty-themes.git ~/.config/kitty/kitty-themes
 git clone https://github.com/butterywombat/nord-kitty.git ~/code/opensource
-ln -s ./kitty ~/.config/kitty
 ln -s ~/code/opensource/nord-kitty/Nord.conf ~/.config/kitty/kitty-themes/Nord.conf
 # this is kinda convoluted, maybe some other impl
 
-# is the below automatic?
-# ln -s ~/.vim ~/.config/nvim
-
-# after the above,
-# ln -s coc-settings.json ~/config/nvim/coc-settings.json
-# ln -s ~/.vimrc ~/config/nvim/init.vim
-
 npm install -g yarn bunyan create-react-app gulp gtop leetcode-cli mocha ndb nodemon prettier server sinon source-map-explorer standard typescript
+# note npm installs yarn (as recommended) so must do this step before going into neovim and PlugInstalling
 
 # TODO not sure where exa aliases are - l=ls -lah
 
 # TODO make sure to sign in to CODE and get settings
-# TODO ensure all kitty settings n themes etc is working
 
 # TODO all the mac osx settings, mashup. couldn't find modifier key stuff
 defaults write com.apple.finder AppleShowAllFiles TRUE

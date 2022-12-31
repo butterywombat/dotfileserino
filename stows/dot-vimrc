@@ -5,12 +5,14 @@ filetype off
       \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
     autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
   endif
-call plug#begin('~/.vim/plugged')
+call plug#begin()
 
 Plug 'dstein64/vim-startuptime', {'on': 'StartupTime'}
 
-Plug '/usr/local/opt/fzf'
+" Plug '/usr/local/opt/fzf'
+Plug '/opt/homebrew/opt/fzf' " if mac m1 silicon
 Plug 'junegunn/fzf.vim' " , {'on': 'Files'}
+" Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 
 " Navigation
 Plug 'preservim/nerdtree', {'on': ['NERDTreeToggle', 'NERDTreeFind']}
@@ -124,12 +126,13 @@ call plug#end()
 
 let mapleader=","
 " set nocompatible " default for nvim
-filetype plugin indent on
-syntax on
-" colorscheme gruvbox
+
+" from plug#end call already
+" filetype plugin indent on
+" syntax on
 
 " let g:nord_cursor_line_number_background = 1
-colorscheme nord
+colorscheme Nord
 
 set termguicolors " better colors, incl the colorcolumns
 set background=dark
@@ -174,7 +177,9 @@ set smartcase
 
 set showcmd " show command in bottom right portion of the screen
 set updatetime=250
-set shell=/usr/local/bin/zsh
+
+" set shell=/usr/local/bin/zsh
+set shell=/opt/homebrew/bin/zsh
 
 " keybindings/maps
 nnoremap <space> :
@@ -207,13 +212,13 @@ nmap <Leader>p :GFiles<CR>
 nmap <silent><Leader>G :GFiles?<CR>
 
 " or maybe gt, go for theirs, ours
-nmap <leader>g1 :diffget //2 <bar> diffup<CR> 
+nmap <leader>g1 :diffget //2 <bar> diffup<CR>
 nmap <leader>g2 :diffget //3 <bar> diffup<CR>
 nmap <silent><Leader>gs :G<CR>
 " fugitive git status
 
 nmap ; :Buffers<CR>
-nnoremap rg :RG 
+nnoremap rg :RG
 " search for word under cursor
 nnoremap <silent><leader>* :RG <C-R><C-W><CR>
 " search for last yanked item
@@ -335,7 +340,7 @@ set undofile
 " set ch=1 " make command one line high
 
 " however interferes with my camelcase motion setup
-noremap <leader>w :up<cr> 
+noremap <leader>w :up<cr>
 
 set ttyfast " u got a fast terminal
 set lazyredraw " to avoid scrolling problems
@@ -351,11 +356,12 @@ augroup Cursor
   au WinLeave * setlocal nocursorcolumn
 augroup END
 
-" Source the vimrc file after saving it
-augroup sourcing
-  autocmd!
-  autocmd bufwritepost .vimrc source $MYVIMRC
-augroup END
+" Source the vimrc file after saving it. on save. doesn't seem to work now TODO WHY? inconsistent
+autocmd! BufWritePost $MYVIMRC source $MYVIMRC | echom "Reloaded $NVIMRC"
+" autocmd! BufWritePost $MYVIMRC source % | echom "Reloaded " . $MYVIMRC | redraw
+
+nnoremap <Leader>vr :source $MYVIMRC<CR>
+nnoremap <Leader>ve :e $MYVIMRC<CR>
 
 " Syntax off for large files
 " autocmd BufReadPre * if getfsize(expand("%")) > 1000000 | syntax off | endif
@@ -384,19 +390,20 @@ command! -bang -nargs=? -complete=dir Files
 
 " copied from fzf.vim
 " make fzf completely delegate its search responsibliity to ripgrep, may be faster
-function! RipgrepFzf(query, fullscreen)
-  let command_fmt = 'rg --column --line-number --no-heading --color=always --smart-case -- %s || true'
-  let initial_command = printf(command_fmt, shellescape(a:query))
-  let reload_command = printf(command_fmt, '{q}')
-  let spec = {'options': ['--phony', '--query', a:query, '--bind', 'change:reload:'.reload_command]}
-  call fzf#vim#grep(initial_command, 1, fzf#vim#with_preview(spec), a:fullscreen)
-endfunction
+ function! RipgrepFzf(query, fullscreen)
+   let command_fmt = 'rg --column --line-number --no-heading --color=always --smart-case -- %s || true'
+   let initial_command = printf(command_fmt, shellescape(a:query))
+   let reload_command = printf(command_fmt, '{q}')
+   let spec = {'options': ['--phony', '--query', a:query, '--bind', 'change:reload:'.reload_command]}
+   call fzf#vim#grep(initial_command, 1, fzf#vim#with_preview(spec), a:fullscreen)
+ endfunction
 
 command! -nargs=* -bang RG call RipgrepFzf(<q-args>, <bang>0)
 " end rg ----------------------------------------------------------------------
 
 " Coc -------------------------------------------------------------------
-let g:coc_node_path = '/Users/xhu/.nvm/versions/node/v14.18.3/bin/node' " use more updated node
+" TODO fix
+let g:coc_node_path = '/opt/homebrew/bin/node'
 command! -nargs=0 Prettier :CocCommand prettier.formatFile
 command! -nargs=0 Eslint :CocCommand eslint.executeAutofix
 command! -nargs=0 Bro :CocCommand git.browserOpen " like Gbro but specific line
@@ -525,7 +532,7 @@ command! -nargs=0 OR :call CocAction('runCommand', 'editor.action.organizeImport
 " nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
 
 " navigate chunks of current buffer ([c and ]c use fugitive to navigate the
-" same)
+" same
 nmap [g <Plug>(coc-git-prevchunk)
 nmap ]g <Plug>(coc-git-nextchunk)
 
