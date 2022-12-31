@@ -41,3 +41,4 @@ npm install -g yarn bunyan eslint create-react-app gulp gtop leetcode-cli mocha 
 # TODO these dont seem to be working?
 #
 # remember to 1) copy .npmrc over for artifactory, 2) copy keysecure (also has zscaler certs), 3) install git pr script
+git clone https://github.com/dxuehu/webstormsettings.git ~/code/webstormsettings
