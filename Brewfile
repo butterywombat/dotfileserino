@@ -1,9 +1,3 @@
-# TODO remove these comments if not needed
-# tap 'neovim/neovim' || true
-# tap 'caskroom/homebrew-cask' || true
-# specify a directory to install
-# cask_args appdir: '/Applications'
-
 tap 'cjbassi/ytop'
 tap 'homebrew/cask-fonts'
 tap 'microsoft/git'
@@ -29,6 +23,7 @@ brew 'ytop'
 brew 'ranger'
 brew 'fnm'
 brew 'python'
+brew 'gh'
 
 # tig
 # brew 'gh'

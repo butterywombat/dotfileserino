@@ -44,7 +44,8 @@ defaults write NSGlobalDomain ApplePressAndHoldEnabled -bool false
 
 echo ""
 echo "Setting a blazingly fast keyboard repeat rate (ain't nobody got time fo special chars while coding!)"
-defaults write NSGlobalDomain KeyRepeat -int 0
+# 0 is so fast redraw can't keep up
+defaults write NSGlobalDomain KeyRepeat -int 1
 
 ###############################################################################
 # Screen                                                                      #

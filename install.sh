@@ -1,10 +1,8 @@
+# new mac came with xcode tools finally
 # xcode-select --install
+
 NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 brew bundle
-# brew install $(cat ./brew/brew.list)
-# brew tap homebrew/cask-fonts # TODO NEEDED?
-# brew install --cask $(cat ./brew/brewcask.list)
-# consider using brew bundle!
 
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" --unattended
 chsh -s /usr/local/bin/zsh
@@ -14,12 +12,12 @@ git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$
 
 
 stow stows -t ~ --dotfiles
-# maybe vimrc one not needed
+# vimrc one for convenience only, neovim uses init.vim
 
 ln -s ~/.vimrc ~/.config/nvim/init.vim
 sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
        https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
-ln -s coc-settings.json ~/.config/nvim/coc-settings.json
+ln -s ./coc-settings.json ~/.config/nvim/coc-settings.json
 
 luarocks install fennel
 git clone https://github.com/agzam/spacehammer ~/.hammerspoon
@@ -30,21 +28,21 @@ git clone https://github.com/butterywombat/nord-kitty.git ~/code/opensource
 ln -s ~/code/opensource/nord-kitty/Nord.conf ~/.config/kitty/kitty-themes/Nord.conf
 # this is kinda convoluted, maybe some other impl
 
-npm install -g yarn bunyan eslint create-react-app gulp gtop leetcode-cli mocha ndb nodemon prettier server sinon source-map-explorer standard typescript
+npm install -g yarn bunyan eslint create-react-app gulp gtop leetcode-cli mocha ndb nodemon prettier serve sinon source-map-explorer standard typescript
 # note npm installs yarn (as recommended) so must do this step before going into neovim and PlugInstalling
 
 # note not sure where exa aliases live - l=ls -lah
 
-# TODO make sure to sign in to CODE and get settings, and webstorm, datagrip with licenses
-
 . macSettings.sh
 # TODO these dont seem to be working?
 #
+# make sure to sign in to CODE and get settings, and webstorm, datagrip with licenses
+
 # FOR LC:
-# remember to 1) copy .npmrc over for artifactory, 2) copy keysecure (also has zscaler certs), 2.5) copy zscaler cert to end of /etc/ssl/cert.pem 3) install git pr script
+# remember to 1) copy .npmrc over for artifactory, 2) copy keysecure (also has zscaler certs), 2.5) copy zscaler cert to end of /etc/ssl/cert.pem 3) install git pr script 4) make sure debugging tests/server/client, running tests on jenkins all work + in various editors/tools if needed
 
 # TODO:
-# 2.6) zscaler workaround for datagrip other intelliJ
+# 2.6) zscaler workaround for datagrip (sync settings) other intelliJ
 # TODO still strange: vscode doesn't detect node
 
 # I think these are buggy
