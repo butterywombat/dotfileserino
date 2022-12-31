@@ -9,8 +9,8 @@ call plug#begin()
 
 Plug 'dstein64/vim-startuptime', {'on': 'StartupTime'}
 
-" Plug '/usr/local/opt/fzf'
-Plug '/opt/homebrew/opt/fzf' " if mac m1 silicon
+Plug '/usr/local/opt/fzf'
+" Plug '/opt/homebrew/opt/fzf' " if mac m1 silicon
 Plug 'junegunn/fzf.vim' " , {'on': 'Files'}
 
 " Navigation
@@ -184,8 +184,8 @@ set mouse=
 set showcmd " show command in bottom right portion of the screen
 set updatetime=250
 
-" set shell=/usr/local/bin/zsh
-set shell=/opt/homebrew/bin/zsh
+set shell=/usr/local/bin/zsh
+" set shell=/opt/homebrew/bin/zsh
 
 " keybindings/maps
 nnoremap <space> :
@@ -410,7 +410,7 @@ command! -nargs=* -bang RG call RipgrepFzf(<q-args>, <bang>0)
 
 " Coc -------------------------------------------------------------------
 " TODO fix
-let g:coc_node_path = '/opt/homebrew/bin/node'
+let g:coc_node_path = '/usr/local/bin/node'
 command! -nargs=0 Prettier :CocCommand prettier.formatFile
 command! -nargs=0 Eslint :CocCommand eslint.executeAutofix
 command! -nargs=0 Bro :CocCommand git.browserOpen " like Gbro but specific line
