@@ -23,7 +23,8 @@ alias tc="node --inspect-brk node_modules/.bin/jest --config ./jestClient.config
 alias debug="node_modules/.bin/jest -i --inspect-brk" # add path-to-test.js and maybe --inspect-brk
 alias wa="node_modules/ui-zephyr/src/bin/zephyr-webpack-watch"
 
-alias gpr="git pull --rebase origin develop"
+alias gpr='git pull --rebase origin develop'
 alias gcgmail='git config --local user.email dxuehu@gmail.com'
 alias gcworkmail='git config --local user.email xhu@lendingclub.com'
 
+alias listImages='lc2 ecr-list-images --repository-name ui/node-build'

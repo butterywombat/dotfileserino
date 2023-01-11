@@ -54,6 +54,8 @@ cask 'visual-studio-code'
 cask 'datagrip'
 cask 'webstorm'
 cask 'spotify'
+cask 'postman'
+cask 'docker' # need Docker.app for mac so docker daemon installs
 
 # cask 'docker'
 # cask 'kindle'

@@ -48,7 +48,7 @@
 ;; [x] w - windows/apps
 ;; [x] |-- l - last window
 ;; [x] |-- r - roam
-;; [x] |-- b - brave
+;; [x] |-- b - chrome
 ;; [x] |-- w - webstorm
 ;; [x] |-- s - slack
 ;; [x] |-- t - texts
@@ -299,8 +299,8 @@
           :title "Last window"
           :action "windows:jump-to-last-window"}
         {:key :b
-         :title "Brave"
-         :action (activator "Brave")}
+         :title "Chrome"
+         :action (activator "Chrome")}
         {:key :r
          :title "Roam"
          :action (activator "Roam")}
@@ -414,7 +414,7 @@
         []))
 
 (local chrome-config
-       {:key "Brave"
+       {:key "Chrome"
         :keys browser-keys
         :items browser-items})
 
